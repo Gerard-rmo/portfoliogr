@@ -98,20 +98,18 @@ export const login = async (req, res, next) => {
         .status(401)
         .json({ message: `Email ou mot de passe incorrect` });
     }
-    // Si la comparaison réussie, renvoie une réponse avec les informations de l'utilisateur
-    res.status(200).json({ message: "Connexion réussie", user: userLogin });
 
     // Générer un token si les informations sont correctes
-    const token = generateToken(userLogin._id);
+    const token = await generateToken(userLogin._id);
 
     // Envoi du token dans un cookie sécurisé
     res.cookie("jwt", token, {
       httpOnly: true, // Le cookie ne sera pas accessible via JavaScript
-      secure: true,
+      secure: process.env.NODE_ENV === "production", // S'assurer que le cookie est envoyé sur HTTPS en production
     });
 
     // Réponse avec succès
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "L'utilisateur s'est connecté avec succès",
       userLogin,
@@ -119,6 +117,6 @@ export const login = async (req, res, next) => {
     });
   } catch (error) {
     // Gestion des erreurs
-    next(error); // Assure-toi d'avoir un middleware d'erreur dans ton application
+    next(error);
   }
 };
