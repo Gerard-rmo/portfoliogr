@@ -1,11 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const JWT_SECRET = process.env.JWT_SECRET;
 
 // Fonction pour créer un utilisateur.
 
@@ -21,6 +16,17 @@ export const registerUser = async (req, res, next) => {
     });
   }
   try {
+    // Vérifie si l'email existe déjà.
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return next({
+        statusCode: 400,
+        message: "Un utilisateur avec cet email existe déjà.",
+      });
+    }
+
+    //Hache le mdp avant de le stocker
+
     const salt = await bcrypt.genSalt(10);
 
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -40,33 +46,82 @@ export const registerUser = async (req, res, next) => {
 
 //Mise à jour des données utilisateur.
 
+// export const updateUser = async (req, res, next) => {
+//   const { id } = req.params;
+//   const newName = req.body.name;
+//   const newPassword = req.body.password;
+
+//   try {
+//     if (newPassword) {
+//       const salt = await bcrypt.genSalt(10);
+//       newPassword = await bcrypt.hash(newPassword, salt);
+//     }
+//     const updateUser = await User.findByIdAndUpdate(
+//       id,
+//       { name: newName, password: newPassword },
+//       { new: true }
+//     );
+
+//     if (!updateUser) {
+//       return res.status(400).json({ message: `Utilisateur non trouvé.` });
+//     }
+//     res.status(202).json(updateUser);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+// export const updateUser = async (req, res, next) => {
+//   try {
+//     const { name, password } = req.body;
+
+//     const user = await User.findById(req.params.id);
+//     if (!user) {
+//       return res.status(404).json({ message: "Utilisateur non trouvé" });
+//     }
+//     if (name) {
+//       user.name = name;
+//     }
+//     if (password) {
+//       const salt = await bcrypt.genSalt(10);
+
+//       user.password = await bcrypt.hash(password, salt);
+//     }
+//     await user.save();
+//     res.status(200).json({ message: "Mise à jour de l'utilisateur.", user });
+//   } catch (error) {
+//     // En cas d'erreur, on passe à la gestion des erreurs
+//     next(error);
+//   }
+// };
 export const updateUser = async (req, res, next) => {
-  const { id } = req.params;
-  const newName = req.body.name;
-  const newPassword = req.body.password;
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-  try {
-    const updateUser = await User.findByIdAndUpdate(
-      id,
-      { name: newName, password: newPassword },
-      { new: true }
+  if (!user) {
+    return next(
+      new ErrorResponse(`User not found with id of ${req.params.id}`, 404)
     );
-
-    if (!updateUser) {
-      return res.status(400).json({ message: `Utilisateur non trouvé.` });
-    }
-    res.status(202).json(updateUser);
-  } catch (error) {
-    next(error);
   }
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
 };
 
 //Suppression des données
 
 export const deleteUser = async (req, res, next) => {
   try {
+    const userToDelete = await User.findById(req.params.id);
+    if (!userToDelete) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
     await User.findByIdAndDelete(req.params.id);
-    res.status(204).json({ message: `Utilisateur supprimé avec succès.` });
+    res.status(204).json({ message: "Utilisateur supprimé avec succès." });
   } catch (error) {
     next(error);
   }
@@ -74,49 +129,30 @@ export const deleteUser = async (req, res, next) => {
 
 // Fonction pour se connecter
 
-// Générer un token JWT
-const generateToken = async (_id) => {
-  const token = JWT.sign({ _id }, JWT_SECRET, { expiresIn: "2d" });
-  return token;
-};
-
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    //Recherche de l'utilisateur par email.
     const userLogin = await User.findOne({ email });
+
+    if (!email || !password) {
+      return next({
+        statusCode: 400,
+        message: "L'email et le mot de passe sont requis.",
+      });
+    }
 
     // Vérifie si l'utilisateur existe
     if (!userLogin) {
       return res.status(401).json({ message: "L'utilisateur n'existe pas" });
     }
 
-    // Comparaison du mot de passe fourni avec le mot de passe haché
-
-    const isMatch = await bcrypt.compare(password, userLogin.password);
-    if (!isMatch) {
-      return res
-        .status(401)
-        .json({ message: `Email ou mot de passe incorrect` });
-    }
-
-    // Générer un token si les informations sont correctes
-    const token = await generateToken(userLogin._id);
-
-    // Envoi du token dans un cookie sécurisé
-    res.cookie("jwt", token, {
-      httpOnly: true, // Le cookie ne sera pas accessible via JavaScript
-      secure: process.env.NODE_ENV === "production", // S'assurer que le cookie est envoyé sur HTTPS en production
-    });
-
-    // Réponse avec succès
+    // Envoi de la réponse avec le token
     res.status(200).json({
-      success: true,
-      message: "L'utilisateur s'est connecté avec succès",
       userLogin,
-      token,
     });
   } catch (error) {
-    // Gestion des erreurs
     next(error);
   }
 };

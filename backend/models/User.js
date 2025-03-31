@@ -25,11 +25,12 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Le mot de passe est obligatoire."],
-      minlenght: [6, "Le mot de passe doit contenir au moins 6 caractères."],
+      minlength: [6, "Le mot de passe doit contenir au moins 6 caractères."],
     },
     role: {
       type: String,
-      enum: ["admin"],
+      enum: ["admin", "user"],
+      default: "user",
     },
   },
   {
@@ -53,7 +54,17 @@ UserSchema.pre("save", async function (next) {
 
 // Vérification du mot de passe lors de la connexion
 UserSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw new Error(`Erreur lors de la comparaison du mot de passe.`);
+  }
+};
+
+UserSchema.methods.getSignedJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
 };
 
 //Exportation du modèle de données pour la connexion

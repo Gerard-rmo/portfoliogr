@@ -10,7 +10,7 @@ const connectDB = async () => {
   try {
     // Connexion à la base de données avec l'URI de MongoDB stocké dans les variables d'environnement
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("base de données connectée");
+    console.log("Base de données connectée.");
     // Message de succès en cas de connexion réussie
   } catch (error) {
     // Affiche une erreur en cas d'échec de la connexion

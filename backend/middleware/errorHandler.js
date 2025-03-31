@@ -15,6 +15,9 @@ export const errorHandler = (err, req, res, next) => {
 
   const errorCode = err.code || "SERVER_ERROR";
 
+  // Conditionner l'affichage de la stack trace à l'environnement (n'afficher que en développement)
+  const stack = process.env.NODE_ENV === "development" ? err.stack : undefined;
+
   // Réponse JSON
 
   res.status(statusCode).json({

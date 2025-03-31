@@ -18,7 +18,7 @@ const cloudinaryConfig = async () => {
       api_key: API_KEY,
       api_secret: API_SECRET,
     });
-    console.log("Cloudinary configuré avec succès");
+    console.log("Cloudinary configuré avec succès.");
   } catch (error) {
     console.error(`Erreur de configuration Cloudinary : ${error.message}`);
   }

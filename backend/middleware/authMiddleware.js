@@ -2,41 +2,73 @@ import User from "../models/User.js";
 import JWT from "jsonwebtoken"; // On importe la bibliothèque `jsonwebtoken` pour travailler avec les JWT.
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Fonction pour protéger les routes
+// // Fonction pour protéger les routes
+// export const protect = async (req, res, next) => {
+//   try {
+//     const token = req.cookies.JWT;
+
+//     // Vérifier si le token existe dans l'en-tête Authorization
+//     if (!token) {
+//       return res.status(401).json({ message: "Token manquant" });
+//     }
+
+//     // Vérifier la validité du token
+//     const decoded = JWT.verify(token, JWT_SECRET);
+
+//     // Récupérer l'utilisateur associé au token
+//     req.user = await User.findById(decoded._id);
+
+//     // Si l'utilisateur n'existe pas, renvoyer une erreur
+//     if (!req.user) {
+//       return res.status(401).json({ message: "Utilisateur non trouvé" });
+//     }
+//     req.User = User;
+
+//     next();
+//   } catch (error) {
+//     // Gérer les erreurs liées à l'expiration ou invalidité du token
+//     if (error.name === "JsonWebTokenError") {
+//       return res.status(401).json({ message: "Token invalide" });
+//     } else if (error.name === "TokenExpiredError") {
+//       return res.status(401).json({ message: "Token expiré" });
+//     }
+
+//     // Erreur générique lors de la vérification du token
+//     res.status(500).json({
+//       message: "Erreur lors de la vérification du token",
+//       error: error.message,
+//     });
+//   }
+// };
 export const protect = async (req, res, next) => {
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    // Set token from Bearer token in header
+    token = req.headers.authorization.split(" ")[1];
+  }
+  // Enable if you want to use token from cookie instead
+  // else if (req.cookies.token) {
+  //   token = req.cookies.token;
+  // }
+
+  // Make sure token exists
+  if (!token) {
+    return res.status(401).json({ message: "Le token n'existe pas" });
+  }
+
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "").trim();
+    // Verify token
+    const decoded = JWT.verify(token, process.env.JWT_SECRET);
 
-    // Vérifier si le token existe dans l'en-tête Authorization
-    if (!token) {
-      return res.status(401).json({ message: "Token manquant" });
-    }
-
-    // Vérifier la validité du token
-    const decoded = JWT.verify(token, JWT_SECRET);
-
-    // Récupérer l'utilisateur associé au token
-    req.user = await User.findById(decoded._id);
-
-    // Si l'utilisateur n'existe pas, renvoyer une erreur
-    if (!req.user) {
-      return res.status(401).json({ message: "Utilisateur non trouvé" });
-    }
+    req.user = await User.findById(decoded.id);
 
     next();
-  } catch (error) {
-    // Gérer les erreurs liées à l'expiration ou invalidité du token
-    if (error.name === "JsonWebTokenError") {
-      return res.status(401).json({ message: "Token invalide" });
-    } else if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token expiré" });
-    }
-
-    // Erreur générique lors de la vérification du token
-    res.status(500).json({
-      message: "Erreur lors de la vérification du token",
-      error: error.message,
-    });
+  } catch (err) {
+    return res.status(401).json({ message: "Pas de droit d'accès" });
   }
 };
 
