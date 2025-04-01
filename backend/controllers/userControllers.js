@@ -46,54 +46,6 @@ export const registerUser = async (req, res, next) => {
 
 //Mise à jour des données utilisateur.
 
-// export const updateUser = async (req, res, next) => {
-//   const { id } = req.params;
-//   const newName = req.body.name;
-//   const newPassword = req.body.password;
-
-//   try {
-//     if (newPassword) {
-//       const salt = await bcrypt.genSalt(10);
-//       newPassword = await bcrypt.hash(newPassword, salt);
-//     }
-//     const updateUser = await User.findByIdAndUpdate(
-//       id,
-//       { name: newName, password: newPassword },
-//       { new: true }
-//     );
-
-//     if (!updateUser) {
-//       return res.status(400).json({ message: `Utilisateur non trouvé.` });
-//     }
-//     res.status(202).json(updateUser);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-// export const updateUser = async (req, res, next) => {
-//   try {
-//     const { name, password } = req.body;
-
-//     const user = await User.findById(req.params.id);
-//     if (!user) {
-//       return res.status(404).json({ message: "Utilisateur non trouvé" });
-//     }
-//     if (name) {
-//       user.name = name;
-//     }
-//     if (password) {
-//       const salt = await bcrypt.genSalt(10);
-
-//       user.password = await bcrypt.hash(password, salt);
-//     }
-//     await user.save();
-//     res.status(200).json({ message: "Mise à jour de l'utilisateur.", user });
-//   } catch (error) {
-//     // En cas d'erreur, on passe à la gestion des erreurs
-//     next(error);
-//   }
-// };
 export const updateUser = async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,

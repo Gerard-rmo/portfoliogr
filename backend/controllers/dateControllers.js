@@ -5,18 +5,18 @@ dotenv.config();
 // Fonction pour enregistrer une nouvelle date de salon
 
 export const registerDate = async (req, res, next) => {
-  const { date, lieu } = req.body;
-
-  if (!date || !lieu) {
-    return next({
-      statusCode: 400,
-      message: `Tous les champs doivent être remplis.`,
-    });
-  }
   try {
-    const date = await Date.create({ date, lieu });
+    const { date, lieu } = req.body;
 
-    res.status(201).json({ message: `L'évènement a bien été créé.`, date });
+    if (!date || !lieu) {
+      return next({
+        statusCode: 400,
+        message: `Tous les champs doivent être remplis.`,
+      });
+    }
+    const dates = await Date.create({ date, lieu, });
+
+    res.status(201).json({ message: `L'évènement a bien été créé.`, dates });
   } catch (error) {
     next(error);
   }

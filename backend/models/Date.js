@@ -5,10 +5,12 @@ import mongoose from "mongoose";
 const DateSchema = new mongoose.Schema({
   date: {
     type: String,
+    trim: true,
     required: true,
   },
   lieu: {
     type: String,
+    trim: true,
     required: true,
   },
 });

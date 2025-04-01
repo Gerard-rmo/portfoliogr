@@ -27,7 +27,7 @@ const router = express.Router();
 // Création des routes
 
 // Route pour l'enregistrement d'un album
-router.post("/create", upload.single("imageURL"), createAlbum);
+router.post("/create",  createAlbum);
 
 // Route pour récupérer tous les albums
 router.get("/", getAllAlbum);

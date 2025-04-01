@@ -14,7 +14,7 @@ const router = express.Router();
 // Création des routes
 
 // Route pour l'enregistrement d'une date
-router.post("/ajouter", registerDate);
+router.post("/create", registerDate);
 
 // Route pour récupérer toutes les dates
 router.get("/", getAllDate);
