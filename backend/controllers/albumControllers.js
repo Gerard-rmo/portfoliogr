@@ -1,5 +1,5 @@
 import Album from "../models/Album.js";
-import {v2 as cloudinary} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { unlinkSync } from "fs";
 import dotenv from "dotenv";
 dotenv.config();
@@ -20,8 +20,8 @@ export const createAlbum = async (req, res, next) => {
         message: "Tous les champs doivent être remplis.",
       });
     }
-     // Vérification si un fichier a bien été téléchargé
-     if (!req.file) {
+    // Vérification si un fichier a bien été téléchargé
+    if (!req.file) {
       return next({
         statusCode: 400,
         message: "Aucune image n'a été téléchargée.",
@@ -30,23 +30,20 @@ export const createAlbum = async (req, res, next) => {
     //Téléchargement de l'image vers Cloudinary
 
     const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "visuels",  // Spécifie le dossier sur Cloudinary
-      resource_type: "image",  // Type de fichier à uploader
+      folder: "visuels", // Spécifie le dossier sur Cloudinary
+      resource_type: "image", // Type de fichier à uploader
     });
     console.log(result);
-// Supprimer le fichier local après le téléchargement
-unlinkSync(req.file.path);
+    // Supprimer le fichier local après le téléchargement
+    unlinkSync(req.file.path);
 
-// Créer un nouvel album dans la base de données
-const album = await Album.create({
-  title,
-  imageURL: result.secure_url,  // URL sécurisée de l'image sur Cloudinary
-  summary,
-});
-    res.status(201).json({message:"Album créé avec succès.",album})
-    
-
-    
+    // Créer un nouvel album dans la base de données
+    const album = await Album.create({
+      title,
+      imageURL: { public_id: result.public_id, url: result.secure_url }, // URL sécurisée de l'image sur Cloudinary
+      summary,
+    });
+    res.status(201).json({ message: "Album créé avec succès.", album });
   } catch (error) {
     next(error);
   }
@@ -71,22 +68,48 @@ export const getAllAlbum = async (req, res, next) => {
 
 export const updateAlbum = async (req, res, next) => {
   const { id } = req.params;
-  const newTitle = req.body.title;
-  const newImageURL = req.body.imageURL;
-  const newSummary = req.body.summary;
 
   try {
-    const updateAlbum = await Album.findByIdAndUpdate(
-      id,
-      { title: newTitle, imageURL: newImageURL, summary: newSummary },
-      { new: true }
-    );
-    if (!updateAlbum) {
-      return res.status(400).json({ message: `Album non trouvé` });
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "visuels",
+        resource_type: "image",
+      });
+      unlinkSync(req.file.path);
+      const updateData = {
+        title: req.body.title,
+        imageURL: { public_id: result.public_id, url: result.secure_url },
+        summary: req.body.summary,
+      };
+      const updateAlbum = await Album.findByIdAndUpdate(id, updateData, {
+        new: true,
+      });
+
+      if (!updateAlbum) {
+        return res.status(400).json({ message: `Album non trouvé.` });
+      }
+      return res
+        .status(202)
+        .json({ message: `Album mis à jour.`, album: updateAlbum });
+    } else {
+      const updateData = {
+        title: req.body.title,
+        summary: req.body.summary,
+      };
+      const updateAlbum = await Album.findByIdAndUpdate(id, updateData, {
+        new: true,
+      });
+      if (!updateAlbum) {
+        return res.status(400).json({ message: `Album non trouvé.` });
+      }
+      return res
+        .status(202)
+        .json({ message: `Album mis à jour.`, album: updateAlbum });
     }
-    res.status(202).json(updateAlbum);
   } catch (error) {
-    next(error);
+    console.error(error);
+
+    return next(error);
   }
 };
 
@@ -94,6 +117,10 @@ export const updateAlbum = async (req, res, next) => {
 
 export const deleteAlbum = async (req, res, next) => {
   try {
+    const album = await Album.findById(req.params.id);
+    if (!album) {
+      return res.status(404).json({ message: `Album non trouvé.` });
+    }
     await Album.findByIdAndDelete(req.params.id);
     res.status(204).json({ message: `Album supprimé avec succès.` });
   } catch (error) {

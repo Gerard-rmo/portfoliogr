@@ -3,7 +3,6 @@ import express from "express"; // Importation d'express pour créer un serveur w
 import dotenv from "dotenv"; // Importation de dotenv pour la gestion des variables d'environnement
 import connectDB from "./config/db.js"; // Importation de la fonction de connexion à la base de données
 import cloudinaryConfig from "./config/cloudinary.js";
-
 import userRoutes from "./routes/userRoutes.js"; // Importation des routes utilisateur
 import albumRoutes from "./routes/albumRoutes.js"; // Importation des routes des albums BD.
 import dateRoutes from "./routes/dateRoutes.js"; // Importation des routes des dates des salons.
@@ -13,7 +12,6 @@ import errorHandler from "./middleware/errorHandler.js"; // Importation du gesti
 import helmet from "helmet"; // Importation de helmet pour la sécurité de l'application
 import cookieParser from "cookie-parser"; // Importation de cookie-parser pour analyser les cookies
 import cors from "cors"; // Importation de cors pour gérer les requêtes cross-origin
-import fileUpload from "express-fileupload"; // Importation de express-fileupload pour le téléchargement de fichiers
 import rateLimit from "express-rate-limit"; // Importation de express-rate-limit pour limiter les requêtes
 
 dotenv.config(); // Chargement des variables d'environnement à partir d'un fichier .env
@@ -56,14 +54,6 @@ app.use(express.json());
 
 // Middleware pour analyser les cookies
 app.use(cookieParser());
-
-// Middleware pour le téléchargement de fichiers avec une limite de taille de 5 Mo
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    limits: { fileSize: 5 * 1024 * 1024 }, // Limite de taille de fichier (5 Mo)
-  })
-);
 
 // Définition des routes de l'application
 app.use("/api/user", userRoutes); // Routes utilisateur

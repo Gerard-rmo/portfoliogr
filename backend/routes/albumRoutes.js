@@ -1,6 +1,6 @@
 // Importation des modules
 import express from "express";
-import multer, { diskStorage } from "multer";
+import { upload } from "../middleware/uploadMiddleware.js";
 
 // Importation des controllers
 import {
@@ -10,24 +10,12 @@ import {
   getAllAlbum,
 } from "../controllers/albumControllers.js";
 
-const storage = diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "upload/");
-  },
-  filename:function (req, file, cb) {
-    const uniqueSuffix = Date.now ()+"-"+Math.round(Math.random()*1E9);
-    cb(null,uniqueSuffix+"-"+file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
-
 const router = express.Router();
 
 // Création des routes
 
 // Route pour l'enregistrement d'un album
-router.post("/create",  createAlbum);
+router.post("/create", upload.single("imageURL"), createAlbum);
 
 // Route pour récupérer tous les albums
 router.get("/", getAllAlbum);
