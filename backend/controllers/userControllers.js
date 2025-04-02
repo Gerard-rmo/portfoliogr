@@ -46,21 +46,28 @@ export const registerUser = async (req, res, next) => {
 //Mise à jour des données utilisateur.
 
 export const updateUser = async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  try {
+    const { name, email, password } = req.body;
+    let updateData = { name, email };
 
-  if (!user) {
-    return next(
-      new ErrorResponse(`User not found with id of ${req.params.id}`, 404)
-    );
+    // If password is being updated, hash it first
+
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
 };
 
 //Suppression des données
@@ -99,9 +106,13 @@ export const login = async (req, res, next) => {
       return res.status(401).json({ message: "L'utilisateur n'existe pas" });
     }
 
+    const token = userLogin.getSignedJwtToken();
+
     // Envoi de la réponse avec le token
     res.status(200).json({
+      succes: true,
       userLogin,
+      token,
     });
   } catch (error) {
     next(error);

@@ -16,15 +16,15 @@ const router = express.Router();
 // Création des routes
 
 // Route pour l'enregistrement d'un album
-router.post("/create",adminCheck, upload.single("imageURL"), createAlbum);
+router.post("/create", upload.single("imageURL"), createAlbum);
 
 // Route pour récupérer tous les albums
-router.get("/", adminCheck,getAllAlbum);
+router.get("/", getAllAlbum);
 
 // Route pour mettre à jour un album par son ID
-router.put("/:id",adminCheck, upload.single("imageURL"), updateAlbum);
+router.put("/:id", upload.single("imageURL"), updateAlbum);
 
 // Route pour supprimer un album par son ID
-router.delete("/:id", adminCheck,deleteAlbum);
+router.delete("/:id", deleteAlbum);
 
 export default router;

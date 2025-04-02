@@ -1,6 +1,5 @@
 // Importation des modules
 import express from "express";
-import { admin, adminCheck } from "../middleware/authMiddleware.js";
 
 // Importation des controllers
 import {
@@ -15,15 +14,15 @@ const router = express.Router();
 // Création des routes
 
 // Route pour l'enregistrement d'une date
-router.post("/create", adminCheck, registerDate);
+router.post("/create", registerDate);
 
 // Route pour récupérer toutes les dates
-router.get("/", adminCheck, getAllDate);
+router.get("/", getAllDate);
 
 // Route pour mettre à jour une date par son ID
-router.put("/:id", adminCheck, updateDate);
+router.put("/:id", updateDate);
 
 // Route pour supprimer une date par son ID
-router.delete("/:id", adminCheck, deleteDate);
+router.delete("/:id", deleteDate);
 
 export default router;
