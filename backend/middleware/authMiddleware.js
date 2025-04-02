@@ -9,17 +9,17 @@ export const protect = async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    // Set token from Bearer token in header
+    //  Définir le token du porteur dans l’ header
     token = req.headers.authorization.split(" ")[1];
   }
 
-  // Make sure token exists
+  // verifie si le token existe
   if (!token) {
     return res.status(401).json({ message: "Le token n'existe pas" });
   }
 
   try {
-    // Verify token
+    // Verification du token
     const decoded = JWT.verify(token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decoded.id);

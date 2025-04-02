@@ -2,7 +2,7 @@
 import express from "express";
 
 // Importer les middleware pour la protection et la gestion des rôles
-import { protect, adminCheck } from "../middleware/authMiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 // Importer les controllers
 import {

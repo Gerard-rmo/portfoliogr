@@ -10,14 +10,14 @@ export const createPhoto = async (req, res, next) => {
   // destructurer les données du corps de la requête.
 
   try {
-    // Vérification si un fichier a bien été téléchargé
+    // Vérification si une photo a bien été téléchargée
     if (!req.file) {
       return next({
         statusCode: 400,
-        message: "Aucune image n'a été téléchargée.",
+        message: "Aucune photo n'a été téléchargée.",
       });
     }
-    //Téléchargement de l'image vers Cloudinary
+    //Téléchargement de la photo vers Cloudinary
 
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "visuels", // Spécifie le dossier sur Cloudinary
@@ -27,7 +27,7 @@ export const createPhoto = async (req, res, next) => {
     // Supprimer le fichier local après le téléchargement
     unlinkSync(req.file.path);
 
-    // Créer un nouvel album dans la base de données
+    // Créer une nouvelle photo dans la base de données
     const photo = await Photo.create({
       imageURL: { public_id: result.public_id, url: result.secure_url }, // URL sécurisée de l'image sur Cloudinary
     });
@@ -37,7 +37,7 @@ export const createPhoto = async (req, res, next) => {
   }
 };
 
-// Sélectionner tous les photos.
+// Sélectionner toutes les photos.
 
 export const getAllPhotos = async (req, res, next) => {
   try {

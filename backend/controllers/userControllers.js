@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import JWT from "jsonwebtoken";
 
 // Fonction pour créer un utilisateur.
 
