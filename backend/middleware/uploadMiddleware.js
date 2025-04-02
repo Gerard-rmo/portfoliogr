@@ -1,33 +1,39 @@
-import cloudinary from "../config/cloudinary.js";
+import multer from "multer";
+import fs from "fs";
 
-export const uploadImage = async (file) => {
-  // vérification de type de ficher
-  const allowedType = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/jpg",
-    "audio/mp3",
-    "audio/ogg",
-  ];
+const uploadDir = "upload";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
-  if (!allowedType.includes(file.mimetype)) {
-    throw new Error("Le fichier doit être une image (JPEG, PNG..)");
-  }
+// Improved Multer storage configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
 
-  // vérificatiion de la taille de l'image (limit a 5 mo par exemple )
-
-  const maxSize = 5 * 1024 * 1024;
-  if (file.size > maxSize) {
-    throw new Error(`L'image doit  etre inferieur a 5 mo `);
-  }
-
-  try {
-    const result = await cloudinary.uploader.upload(file.tempFilePath);
-    return result.secure_url;
-  } catch (error) {
-    throw new Error(
-      `Erreur lors de l'upload de l'image sur cloudinary ${error.message}`
-    );
+// Better file filter for images
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Le fichier doit être une image (JPEG, PNG, WEBP)"), false);
   }
 };
+
+// Configure multer with limits
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB
+  },
+});
+
+export { upload };
