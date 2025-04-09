@@ -1,65 +1,64 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getAlbum } from "../Services/AlbumsService";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from '../services/api';
 
 const AlbumDetailPage = () => {
+  const { id } = useParams();
+  const [album, setAlbum] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const { id } = useParams();
-    const [album, setAlbum] = useState(null);
+  useEffect(() => {
+    api.get(`/albums/${id}`)
+      .then(res => {
+        setAlbum(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Erreur lors du chargement de l'album :", err);
+        setLoading(false);
+      });
+  }, [id]);
 
-    useEffect(() => {
-        const fetchAlbumDetails = async () => {
-            try {
-                const data = await getAlbum(id);
-                setAlbum(data);
+  if (loading) return <p>Chargement...</p>;
+  if (!album) return <p>Album introuvable</p>;
 
-            } catch (error) {
-                console.error(`Erreur lors de la récupération de l'album.`, error);
-
-
-            }
-        };
-        fetchAlbumDetails();
-    }, [id]);
-
-    if (!album) {
-        return <div>Chargement...</div>
-    }
-
-    const { title,summary, imageUrl, createdAt } = album;
-
-    const formattedDate = new Date(createdAt).toLocaleDateString('fr-FR',
-        {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
-
-
-    return (
-        <div style={styles.container}>
-            <h2>{title}</h2>
-            <img src={imageUrl} alt={`Image de l'album ${title}`} style={styles.image} />
-            <p>{summary}</p>
-            <p><b>Publié le :</b>{formattedDate}</p>
-        </div>
-    )
-}
-
-
-const styles = {
-    container: {
-        
-        padding: '20px',
-        maxWidth: '800px',
-        margin: '0 auto',
-    },
-    image: {
-        width: '100%',
-        height: 'auto',
-        borderRadius: '8px',
-        marginBottom: '20px',
-    },
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>{album.titre}</h1>
+      <img src={album.couverture} alt={album.titre} style={styles.cover} />
+      <p style={styles.summary}>{album.summary}</p>
+    </div>
+  );
 };
 
-export default AlbumDetailPage
+const styles = {
+  container: {
+    textAlign: 'center',
+    padding: '40px',
+    backgroundColor: '#f3f3f3',
+  },
+  title: {
+    fontSize: '28px',
+    fontWeight: 'bold',
+    color: '#444',
+    marginBottom: '20px',
+  },
+  cover: {
+    maxWidth: '300px',
+    width: '100%',
+    borderRadius: '10px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+    marginBottom: '20px',
+  },
+  summary: {
+    maxWidth: '700px',
+    margin: '0 auto',
+    fontSize: '18px',
+    lineHeight: '1.6',
+    color: '#333',
+    fontFamily: "'Verdana', serif",
+  },
+};
+
+export default AlbumDetailPage;
+

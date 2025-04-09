@@ -15,7 +15,17 @@ const CreateAlbum = () => {
 
     } catch (error) {
 
-      console.error(`Erreur lors de la création de l'album`, error);
+      console.error(`Erreur lors de la création de l'album`, error); const handleSubmit = async (albumData) => {
+        try {
+          await CreateAlbum(albumData);
+          navigate('/')
+    
+        } catch (error) {
+    
+          console.error(`Erreur lors de la création de l'album`, error);
+    
+        };
+      }
 
     };
   }
