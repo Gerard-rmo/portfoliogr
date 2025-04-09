@@ -10,4 +10,4 @@ const api = axios.create({
 });
 
 export default api;
-// Compare this snippet from backend/controllers/userController.js:
+

@@ -1,49 +1,55 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const Navbar = () => {
-
-    const [ isAuth, setIsAuth ] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const userIsAuthenticated = localStorage.getItem("isAuth") === "true"; // Vérifier si l'utilisateur est authentifié
-            setIsAuth(userIsAuthenticated); //  Mettre à jour l'état
+        const userIsAuthenticated = JSON.parse(localStorage.getItem("isAuth") || "false");
+        setIsAuth(userIsAuthenticated);
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("isAuth");  // Supprimer le token de connexion
-        setIsAuth(false);   // Mettre à jour l'état
-        navigate("/login"); // Rediriger vers la page de connexion
+        localStorage.removeItem("isAuth");
+        setIsAuth(false);
+        navigate("/login");
     };
+    
 
     return (
-        <nav style={styles.nav}>
+        <nav style={styles.nav} role="navigation">
             <ul style={styles.navList}>
-
                 <li style={styles.navItem}>
-                    <Link to='/' style={styles.navLink}>
+                    <Link to="/" style={styles.btnLink} >
                         Accueil
                     </Link>
                 </li>
-
                 <li style={styles.navItem}>
-                { isAuth ? (        // Si l'utilisateur est authentifié
-                    <button style={styles.navLink} onClick={handleLogout}>Logout</button>
-                ) : (
-                    <Link to="/login" style={styles.navLink}>Se connecter</Link> )}
-                </li>
+                    <Link to="/" style={styles.navLink}>
+                        Bédéthèque
+                    </Link>
+                </li> 
+                <li style={styles.navItem}>
+                    <Link to="/" style={styles.navLink}>
+                        Planches de skate
+                    </Link>
+                </li> 
+                <li style={styles.navItem}>
+                    <Link to="/" style={styles.navLink}>
+                        Salons
+                    </Link>
+                </li> 
 
-
-
+                
             </ul>
         </nav>
-    )
-}
+    );
+};
 
 const styles = {
     nav: {
-        backgroundColor: 'blue',
+        backgroundColor: 'rgb(19, 98, 163)',
         padding: '13px',
     },
     navList: {
@@ -51,16 +57,33 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-around',
         margin: 0,
-        padding: 0
+        padding: 0, 
     },
     navItem: {
-        margin: '0 10px',
+        margin: '0 10 px',
+        fontFamily: "'Verdana', serif", 
     },
     navLink: {
         color: 'white',
         textDecoration: 'none',
-        fontSize: '2em'
-    }
-}
+        fontSize: '15px',
+    },
+    navButton: {
+        backgroundColor: 'transparent',
+        border: 'none',
+        color: 'white',
+        fontSize: '2em',
+        cursor: 'pointer',
+    },
+    btnLink: {
+        padding:'5px 10px',
+        backgroundColor:'rgb(159, 132, 24)',
+        color:'yellow',
+        borderRadius: '6px',
+        textDecoration: 'none',
+        fontWeight: 'bold',
+      }
+      
+};
 
-export default Navbar
+export default Navbar;
