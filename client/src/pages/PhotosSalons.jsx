@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import api from '../services/api';
+import axiosConfig from '../Services/AxiosConfig.js';
 
 const PhotosSalons = () => {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    api.get('/photos')
+    axiosConfig.get('/api/photos')
       .then(res => setPhotos(res.data))
       .catch(err => console.error("Erreur chargement photos salons :", err));
   }, []);

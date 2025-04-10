@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import api from '../services/api';
+import axiosConfig from '../Services/AxiosConfig';
 
 const DatesSalons = () => {
   const [salons, setSalons] = useState([]);
 
   useEffect(() => {
-    api.get('/salons')
+    axiosConfig.get('/api/dates')
       .then(response => setSalons(response.data))
       .catch(error => console.error("Erreur chargement salons :", error));
   }, []);

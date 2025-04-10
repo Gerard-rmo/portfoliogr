@@ -8,30 +8,47 @@ import PhotosPresse from './pages/PhotosPresse';
 import PhotosSalons from './pages/PhotosSalons';
 import Skates from './pages/Skates';
 import AlbumDetailPage from './components/AlbumDetailPage';
+import DashboardAdmin from './components/DashboardAdmin';
+import LoginPage from './components/LoginPage';
+// import PrivateRoute from './components/PrivateRoute';
+// import { AuthProvider } from './components/AuthContext';
+
 import './App.css';
 
 const App = () => {
   return (
+    
     <Router>
-      <Navbar />
+      {/* <AuthProvider>  */}
+        <Navbar />
+        
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/albums' element={<Bedetheque />} />
+          <Route path='/skates' element={<Skates />} />
+          <Route path='/salons' element={<DatesSalons />} />
+          <Route path='/presse' element={<PhotosPresse />} />
+          <Route path='/photos-salons' element={<PhotosSalons />} />
+          <Route path='/albums/:id' element={<AlbumDetailPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route
+            path='/admin'
+            element={
+              // <PrivateRoute>
+                <DashboardAdmin />
+              // </PrivateRoute>
+            }
+          />
+        </Routes>
 
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/albums' element={<Bedetheque />} />
-        <Route path='/skates' element={<Skates />} />
-        <Route path='/salons' element={<DatesSalons />} />
-        <Route path='/presse' element={<PhotosPresse />} />
-        <Route path='/photos-salons' element={<PhotosSalons />} />
-        <Route path='/albums/:id' element={<AlbumDetailPage />} />
-      </Routes>
+        <div className="contact-wrapper">
+          <a href="mailto:gerard.romero.glaive@gmail.com" className="floating-contact">
+            Contactez-moi
+          </a>
+        </div>
 
-      <div className="contact-wrapper">
-        <a href="mailto:gerard.romero.glaive@gmail.com" className="floating-contact">
-          Contactez-moi
-        </a>
-      </div>
-
-      <Footer />
+        <Footer />
+      {/* </AuthProvider> */}
     </Router>
   );
 };

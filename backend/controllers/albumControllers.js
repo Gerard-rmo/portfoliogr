@@ -55,7 +55,7 @@ export const getAllAlbum = async (req, res, next) => {
   try {
     const allAlbum = await Album.find().select();
     //Sélectionne tous les albums.
-    res.staus(200).json({
+    res.status(200).json({
       message: `Récupération de tous les albums.`,
       allAlbum,
     });

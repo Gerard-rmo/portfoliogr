@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import api from '../services/api';
+import axiosConfig from '../Services/AxiosConfig';
 
 const AlbumDetailPage = () => {
   const { id } = useParams();
@@ -8,7 +8,7 @@ const AlbumDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get(`/albums/${id}`)
+    axiosConfig.get(`/api/albums/${id}`)
       .then(res => {
         setAlbum(res.data);
         setLoading(false);

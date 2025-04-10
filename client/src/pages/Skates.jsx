@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import api from '../services/api';
+import axiosConfig from "../Services/AxiosConfig";
 
 const Skates = () => {
   const [skates, setSkates] = useState([]);
 
   useEffect(() => {
-    api.get('/photos')
+    axiosConfig.get('/api/photos')
       .then(res => setSkates(res.data))
       .catch(err => console.error("Erreur chargement skates :", err));
   }, []);

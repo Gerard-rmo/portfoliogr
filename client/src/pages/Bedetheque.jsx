@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.webp';
-import ima from '../assets/pres.webp';
-import api from '../services/api';
+// import ima from '../assets/pres.webp';
+import axiosConfig from '../Services/AxiosConfig.js';
 
 const Bedetheque = () => {
   const navigate = useNavigate();
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    api.get('/albums')
+    axiosConfig.get('/api/albums')
       .then(res => setAlbums(res.data))
       .catch(err => console.error("Erreur chargement albums :", err));
   }, []);
@@ -17,8 +17,8 @@ const Bedetheque = () => {
   return (
     <div style={styles.container}>
       <img src={logo} alt="Logo du glaive production" style={styles.logo} />
-      <p style={styles.p}>La bédéthèque de Gégé</p>
-      <img src={ima} alt="Présentation de l'auteur" style={styles.logo} />
+      <p style={styles.p}>MA BEDETHEQUE</p>
+      {/* <img src={ima} alt="Présentation de l'auteur" style={styles.logo} /> */}
 
       <h2 style={styles.h2}>Nos Albums</h2>
 
@@ -27,7 +27,7 @@ const Bedetheque = () => {
           <div
             key={album._id}
             style={styles.albumCard}
-            onClick={() => navigate(`/albums/${album._id}`)}
+            onClick={() => navigate(`/api/albums/${album._id}`)}
           >
             <img src={album.couverture} alt={album.titre} style={styles.coverImage} />
             <p style={styles.albumTitle}>{album.titre}</p>

@@ -43,7 +43,7 @@ export const getAllPhotos = async (req, res, next) => {
   try {
     const allPhotos = await Photo.find().select();
     //Sélectionne toutes les photos.
-    res.staus(200).json({
+    res.status(200).json({
       message: `Récupération de toutes les photos.`,
       allPhotos,
     });

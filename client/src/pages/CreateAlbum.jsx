@@ -1,42 +1,42 @@
 
 
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 
-const CreateAlbum = () => {
+// const CreateAlbum = () => {
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  const handleSubmit = async (albumData) => {
-    try {
-      await CreateAlbum(albumData);
-      navigate('/')
+//   const handleSubmit = async (albumData) => {
+//     try {
+//       await CreateAlbum(albumData);
+//       navigate('/')
 
-    } catch (error) {
+//     } catch (error) {
 
-      console.error(`Erreur lors de la création de l'album`, error); const handleSubmit = async (albumData) => {
-        try {
-          await CreateAlbum(albumData);
-          navigate('/')
+//       console.error(`Erreur lors de la création de l'album`, error); const handleSubmit = async (albumData) => {
+//         try {
+//           await CreateAlbum(albumData);
+//           navigate('/')
     
-        } catch (error) {
+//         } catch (error) {
     
-          console.error(`Erreur lors de la création de l'album`, error);
+//           console.error(`Erreur lors de la création de l'album`, error);
     
-        };
-      }
+//         };
+//       }
 
-    };
-  }
-  return (
-    <div>
+//     };
+//   }
+//   return (
+//     <div>
 
-      <AlbumForm onSubmit={handleSubmit} title="Créer un nouvel album" />
+//       <AlbumForm onSubmit={handleSubmit} title="Créer un nouvel album" />
 
-    </div>
-  )
+//     </div>
+//   )
 
-}
+// }
 
-export default CreateAlbum
+// export default CreateAlbum
