@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadDir)) {
 const storage = multer.diskStorage({
   // Fonction de destination pour spécifier le répertoire où le fichier sera enregistré
   destination: function (req, file, cb) {
-    cb(null, uploadDir); // Le fichier sera enregistré dans le répertoire 'upload'
+    cb(null, "uploads/"); // Le fichier sera enregistré dans le répertoire 'upload'
   },
 
   // Fonction pour définir le nom du fichier téléchargé

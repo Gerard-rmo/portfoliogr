@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./AlbumsManager.css";
+
 
 const AlbumsManager = () => {
-  const [albums, setAlbums] = useState([]); // Renommer la variable d'état en "albums"
-  const [title, setTitle] = useState('');
-  const [summary, setSummary] = useState('');
-  const [image, setImage] = useState(null);
-  const [editingId, setEditingId] = useState(null);
+  const [albums, setAlbums] = useState([]);
+  const [newAlbum, setNewAlbum] = useState({
+    title: "",
+    summary: "",
+    image: null,
+  });
 
   useEffect(() => {
     fetchAlbums();
@@ -14,77 +17,102 @@ const AlbumsManager = () => {
 
   const fetchAlbums = async () => {
     try {
-      const res = await axios.get('http://localhost:3007/api/albums');
-      // Vérifie que la réponse contient un tableau d'albums
-      setAlbums(Array.isArray(res.data) ? res.data : res.data.albums || []);
-    } catch (err) {
-      console.error('Erreur lors de la récupération des albums:', err);
+      const response = await axios.get("http://localhost:3007/api/albums");
+      if (Array.isArray(response.data)) {
+        setAlbums(response.data);
+      } else {
+        console.error("La réponse n'est pas un tableau d'albums", response.data);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des albums :", error);
     }
+  };
+
+  useEffect(() => {
+    fetchAlbums();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setNewAlbum((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('summary', summary);
-    if (image) formData.append('image', image);
+    formData.append("title", newAlbum.title);
+    formData.append("summary", newAlbum.summary);
+    if (newAlbum.image) {
+      formData.append("image", newAlbum.image);
+    }
 
     try {
-      if (editingId) {
-        await axios.put(`http://localhost:3007/api/albums/${editingId}`, formData);
-      } else {
-        await axios.post('http://localhost:3007/api/albums', formData);
-      }
-      resetForm();
+      await axios.post("http://localhost:3007/api/albums", formData);
+      setNewAlbum({ title: "", summary: "", image: null });
       fetchAlbums();
-    } catch (err) {
-      console.error('Erreur création/modification album:', err);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de l'album :", error);
     }
   };
 
-  const resetForm = () => {
-    setTitle('');
-    setSummary('');
-    setImage(null);
-    setEditingId(null);
-  };
-
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3007/api/albums/${id}`);
-    fetchAlbums();
-  };
-
-  const handleEdit = (album) => {
-    setTitle(album.title);
-    setSummary(album.summary);
-    setEditingId(album._id);
+    try {
+      await axios.delete(`http://localhost:3007/api/albums/${id}`);
+      fetchAlbums();
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'album :", error);
+    }
   };
 
   return (
-    <div>
-      <h2>Albums</h2>
-      <form onSubmit={handleSubmit}>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Titre" required />
-        <input value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Résumé" required />
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <button type="submit">{editingId ? "Modifier" : "Ajouter"}</button>
+    <div className="albums-container">
+      <h2>Gestion des Albums</h2>
+
+      <form onSubmit={handleSubmit} className="album-form" encType="multipart/form-data">
+        <input
+          type="text"
+          name="title"
+          value={newAlbum.title}
+          onChange={handleChange}
+          placeholder="Titre"
+          required
+        />
+        <input
+          type="text"
+          name="summary"
+          value={newAlbum.summary}
+          onChange={handleChange}
+          placeholder="Description"
+          required
+        />
+        <input
+          type="file"
+          name="image"
+          onChange={handleChange}
+          accept="image/*"
+        />
+        <button type="submit">Ajouter</button>
       </form>
 
-      <ul>
-        {albums.length > 0 ? ( // Vérifie si albums est non vide avant de tenter de mapper
-          albums.map((album) => (
-            <li key={album._id}>
+      <ul className="album-list">
+        {albums.map((album) => (
+          <li key={album._id} className="album-item">
+            <p>
               <strong>{album.title}</strong> - {album.summary}
-              <button onClick={() => handleEdit(album)}>Modifier</button>
-              <button onClick={() => handleDelete(album._id)}>Supprimer</button>
-            </li>
-          ))
-        ) : (
-          <li>Aucun album trouvé.</li>
-        )}
+            </p>
+            {album.imageURL?.url && (
+              <img src={album.imageURL.url} alt={album.title} />
+            )}
+            <button onClick={() => handleDelete(album._id)}>Supprimer</button>
+          </li>
+        ))}
       </ul>
     </div>
   );
 };
 
 export default AlbumsManager;
+

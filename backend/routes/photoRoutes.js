@@ -1,7 +1,6 @@
 // Importation des modules
 import express from "express";
 import { upload } from "../middleware/uploadMiddleware.js";
-import { adminCheck } from "../middleware/authMiddleware.js";
 
 // Importation des controllers
 import {

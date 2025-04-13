@@ -32,7 +32,7 @@ const Navbar = () => {
 
 const styles = {
   nav: {
-    backgroundColor: 'rgb(19, 98, 163)',
+    backgroundColor: 'rgb(28, 91, 143)',
     padding: '13px',
   },
   navList: {
@@ -43,7 +43,7 @@ const styles = {
     padding: 0,
   },
   navItem: {
-    margin: '0 10px', // Corrigé ici (le "px" était séparé)
+    margin: '0 10px',
     fontFamily: "'Verdana', serif",
   },
   navLink: {
@@ -53,12 +53,14 @@ const styles = {
   },
   btnLink: {
     padding: '5px 10px',
-    backgroundColor: 'rgb(159, 132, 24)',
+    backgroundColor: 'rgb(4, 2, 105)',
     color: 'yellow',
-    borderRadius: '6px',
+    borderRadius: '50px',
     textDecoration: 'none',
     fontWeight: 'bold',
   },
+  
+  
 };
 
 export default Navbar;

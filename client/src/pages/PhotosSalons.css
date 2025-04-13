@@ -1,0 +1,73 @@
+.photos-salons-container {
+  text-align: center;
+  padding: 20px 0;
+  max-width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    rgba(249, 198, 58, 0.94) 30%,
+    rgba(254, 250, 123, 0.91) 67%,
+    rgb(253, 255, 161) 100%
+  );
+
+  .logo {
+    width: 280px;
+    height: auto;
+    margin-bottom: 5px;
+  }
+
+  .bedetheque-title {
+    font-family: "Verdana", serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(4, 58, 102);
+    line-height: 1.6;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
+    text-shadow: 1px 10px 5px rgb(226, 99, 20);
+  }
+}
+
+.photo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.photo-item {
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  border-radius: 8px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .photo-item {
+    max-width: 45%;
+  }
+  .photo {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-item {
+    max-width: 90%;
+  }
+  .photo {
+    max-width: 120px;
+  }
+}

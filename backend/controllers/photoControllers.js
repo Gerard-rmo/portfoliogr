@@ -10,11 +10,13 @@ export const createPhoto = async (req, res, next) => {
   // destructurer les données du corps de la requête.
 
   try {
+    const { categorie } = req.body;
+
     // Vérification si une photo a bien été téléchargée
-    if (!req.file) {
+    if (!req.file || !categorie) {
       return next({
         statusCode: 400,
-        message: "Aucune photo n'a été téléchargée.",
+        message: "Image et catégorie requises.",
       });
     }
     //Téléchargement de la photo vers Cloudinary
@@ -23,9 +25,9 @@ export const createPhoto = async (req, res, next) => {
       folder: "visuels", // Spécifie le dossier sur Cloudinary
       resource_type: "image", // Type de fichier à uploader
     });
-    console.log(result);
+
     // Supprimer le fichier local après le téléchargement
-    unlinkSync(req.file.path);
+    FileSystem.unlinkSync(req.file.path);
 
     // Créer une nouvelle photo dans la base de données
     const photo = await Photo.create({
@@ -41,11 +43,14 @@ export const createPhoto = async (req, res, next) => {
 
 export const getAllPhotos = async (req, res, next) => {
   try {
-    const allPhotos = await Photo.find().select();
+    const { categorie } = req.query;
+    const photos = categorie
+      ? await Photo.find({ categorie })
+      : await Photo.find();
     //Sélectionne toutes les photos.
     res.status(200).json({
       message: `Récupération de toutes les photos.`,
-      allPhotos,
+      photos,
     });
   } catch (error) {
     next(error);
@@ -55,18 +60,26 @@ export const getAllPhotos = async (req, res, next) => {
 //Mise à jour des photos
 
 export const updatePhoto = async (req, res, next) => {
-  const { id } = req.params;
-
   try {
+    const { id } = req.params;
+    const { categorie } = req.body;
+
+    const photo = await Photo.findById(id);
+    if (!photo) return res.status(404).json({ message: "Photo non trouvée" });
+
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "visuels",
         resource_type: "image",
       });
-      unlinkSync(req.file.path);
+      FileSystem.unlinkSync(req.file.path);
       const updateData = {
         imageURL: { public_id: result.public_id, url: result.secure_url },
       };
+      if (categorie) {
+        photo.categorie = categorie;
+      }
+
       const updatePhoto = await Photo.findByIdAndUpdate(id, updateData, {
         new: true,
       });

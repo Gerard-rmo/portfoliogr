@@ -11,17 +11,19 @@ import slide7 from '../assets/MOSQUITO.jpg';
 import slide8 from '../assets/protecteurs.png';
 import slide9 from '../assets/couv - Copie.png';
 import slide10 from '../assets/couv.png';
+import "./HomePage.css";
 
 const slides = [slide1, slide2, slide3, slide4, slide5, slide6,slide7, slide8, slide9, slide10]; 
 
 const HomePage = () => {
   return (
-    <div style={styles.container}>
+    <div className="home-container">
       <img src={logo} alt="Logo du glaive production" className="responsive-logo" />
 
-      <p style={styles.p}>BIENVENUE DANS L'UNIVERS DE GERARD ROMERO
-        OÙ VOUS POURREZ DECOUVRIR TOUT SON TRAVAIL
-        ET COMMANDER SES DIFFERENTS ALBUMS BD ET AUTRES CREATIONS.
+      <p className="home-description">
+        BIENVENUE DANS L'UNIVERS DE GERARD ROMERO<br />
+        OÙ VOUS POURREZ DÉCOUVRIR TOUT SON TRAVAIL<br />
+        ET COMMANDER SES DIFFÉRENTS ALBUMS BD ET AUTRES CRÉATIONS.
       </p>
 
       <img src={ima} alt="Présentation de l'auteur" className="responsive-logo2" />
@@ -30,17 +32,12 @@ const HomePage = () => {
         <div className="carousel-track-frise">
           {[...slides, ...slides].map((img, index) => (
             <div className="carousel-item-frise" key={index}>
-      <       img src={img} alt={`Slide ${index + 1}`} />
+              <img src={img} alt={`Slide ${index + 1}`} />
+            </div>
+          ))}
         </div>
-        
-         ))}
-   
       </div>
-
-      </div>
-     
     </div>
-    
   );
 };
 
@@ -50,7 +47,7 @@ const styles = {
     padding: '20px 0',
     maxWidth: '100%',
     margin: '0 auto',
-    background: "linear-gradient(90deg, rgba(238, 203, 43, 0.94) 30%, rgba(239, 245, 81, 0.91) 67%, rgb(37, 152, 247) 100%)",
+    background: "linear-gradient(90deg, rgba(249, 198, 58, 0.94) 30%, rgba(254, 250, 123, 0.91) 67%, rgb(253, 255, 161) 100%)",
   },
   
   createLink: {
@@ -75,7 +72,7 @@ const styles = {
     fontFamily: "'Verdana', serif", 
     fontSize: '20px',            
     fontWeight: 'bold',
-    color: 'brown',
+    color: 'rgb(4, 58, 102)',
     lineHeight: '1.6',
     margin: '20px auto',
     padding:'10px',

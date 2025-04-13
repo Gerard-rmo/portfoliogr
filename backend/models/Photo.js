@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
 
-//Creation du schéma de données pour les photos des salons
-
-const PhotoSchema = new mongoose.Schema(
-  {
-    imageURL: {
-      public_id: String,
-      url: String,
-    },
+const photoSchema = new mongoose.Schema({
+  imageURL: { type: String, required: true },
+  categorie: {
+    type: String,
+    enum: ["salon", "skate", "presse"],
+    required: true,
   },
-  { timestamps: true }
-);
+});
 
-// Exportation du modèle de données pour les photos des salons.
-
-export default mongoose.model("Photo", PhotoSchema);
+const Photo = mongoose.model("Photo", photoSchema);
+export default Photo;

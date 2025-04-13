@@ -7,9 +7,9 @@
   
   .floating-contact {
     display: inline-block;
-    background-color: #0d427a;
+    background-color: #ef2a02;
     color: white;
-    font-weight: 500;
+    font-weight: bold;
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 50px;

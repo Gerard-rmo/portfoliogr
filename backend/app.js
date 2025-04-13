@@ -11,6 +11,7 @@ import helmet from "helmet"; // Importation de helmet pour la sécurité de l'ap
 import cookieParser from "cookie-parser"; // Importation de cookie-parser pour analyser les cookies
 import cors from "cors"; // Importation de cors pour gérer les requêtes cross-origin
 import rateLimit from "express-rate-limit"; // Importation de express-rate-limit pour limiter les requêtes
+import fileUpload from "express-fileupload";
 
 dotenv.config(); // Chargement des variables d'environnement à partir d'un fichier .env
 const app = express(); // Création d'une instance de l'application Express
@@ -52,6 +53,10 @@ app.use(express.json());
 
 // Middleware pour analyser les cookies
 app.use(cookieParser());
+
+app.use(fileUpload());
+
+app.use("/uploads", express.static("uploads"));
 
 // Définition des routes de l'application
 app.use("/api/user", userRoutes); // Routes utilisateur

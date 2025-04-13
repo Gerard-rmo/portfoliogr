@@ -10,18 +10,26 @@ const PhotosManager = () => {
   }, []);
 
   const fetchPhotos = async () => {
-    const res = await axios.get('http://localhost:3007/api/photos');
-    setPhotos(Array.isArray(res.data) ? res.data : res.data.photos);
+    try {
+      const res = await axios.get('http://localhost:3007/api/photos');
+      setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
+    } catch (err) {
+      console.error('Erreur récupération photos:', err);
+    }
   };
 
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    if (image) formData.append('image', image);
+    if (image) formData.append('imageURL', image); // Change image to imageURL
 
-    await axios.post('http://localhost:3007/api/photos', formData);
-    setImage(null);
-    fetchPhotos();
+    try {
+      await axios.post('http://localhost:3007/api/photos', formData);
+      setImage(null);
+      fetchPhotos();
+    } catch (err) {
+      console.error('Erreur upload photo:', err);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -38,9 +46,10 @@ const PhotosManager = () => {
       </form>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        {photos.map((photo) => (
+        {photos.map(photo => (
           <div key={photo._id} style={{ position: 'relative' }}>
-            <img src={photo.url} alt="photo" style={{ width: '150px' }} />
+            {/* Utilisation de imageURL.url */}
+            {photo.imageURL?.url && <img src={photo.imageURL.url} alt="Photo" style={{ width: '200px' }} />}
             <button onClick={() => handleDelete(photo._id)} style={{ position: 'absolute', top: 0, right: 0 }}>X</button>
           </div>
         ))}
@@ -50,3 +59,4 @@ const PhotosManager = () => {
 };
 
 export default PhotosManager;
+

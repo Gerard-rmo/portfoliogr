@@ -10,8 +10,8 @@ const AlbumSchema = new mongoose.Schema(
       required: true,
     },
     imageURL: {
-      public_id: String,
-      url: String,
+      public_id: { type: String, required: true },
+      url: { type: String, required: true },
     },
     summary: {
       type: String,
