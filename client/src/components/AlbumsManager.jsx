@@ -30,7 +30,7 @@ const AlbumsManager = () => {
 
   useEffect(() => {
     fetchAlbums();
-  }, []);
+  }, []);git 
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
