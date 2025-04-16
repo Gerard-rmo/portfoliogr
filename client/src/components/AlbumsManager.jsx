@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AlbumsManager.css";
 
-
 const AlbumsManager = () => {
   const [albums, setAlbums] = useState([]);
   const [newAlbum, setNewAlbum] = useState({
@@ -10,6 +9,8 @@ const AlbumsManager = () => {
     summary: "",
     image: null,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchAlbums();
@@ -18,8 +19,8 @@ const AlbumsManager = () => {
   const fetchAlbums = async () => {
     try {
       const response = await axios.get("http://localhost:3007/api/albums");
-      if (Array.isArray(response.data)) {
-        setAlbums(response.data);
+      if (response.data && response.data.allAlbum) {
+        setAlbums(response.data.allAlbum);
       } else {
         console.error("La réponse n'est pas un tableau d'albums", response.data);
       }
@@ -38,34 +39,54 @@ const AlbumsManager = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    
     const formData = new FormData();
     formData.append("title", newAlbum.title);
     formData.append("summary", newAlbum.summary);
     if (newAlbum.image) {
-      formData.append("image", newAlbum.image);
+      formData.append("imageURL", newAlbum.image);
     }
 
     try {
-      await axios.post("http://localhost:3007/api/albums/create", formData);
+      await axios.post("http://localhost:3007/api/albums/create", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
       setNewAlbum({ title: "", summary: "", image: null });
+      // Actualiser la liste après ajout
       fetchAlbums();
     } catch (error) {
       console.error("Erreur lors de l'ajout de l'album :", error);
+      setError("Échec de l'ajout de l'album");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet album ?")) {
+      return;
+    }
+    
     try {
+      setLoading(true);
       await axios.delete(`http://localhost:3007/api/albums/${id}`);
+      // Actualiser la liste après suppression
       fetchAlbums();
     } catch (error) {
       console.error("Erreur lors de la suppression de l'album :", error);
+      setError("Échec de la suppression de l'album");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="albums-container">
       <h2>Gestion des Albums</h2>
+      
+      {error && <div className="error-message">{error}</div>}
 
       <form onSubmit={handleSubmit} className="album-form" encType="multipart/form-data">
         <input
@@ -90,9 +111,13 @@ const AlbumsManager = () => {
           onChange={handleChange}
           accept="image/*"
         />
-        <button type="submit">Ajouter</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Chargement..." : "Ajouter"}
+        </button>
       </form>
 
+      {loading && <p>Chargement des albums...</p>}
+      
       <ul className="album-list">
         {albums.map((album) => (
           <li key={album._id} className="album-item">
@@ -100,9 +125,18 @@ const AlbumsManager = () => {
               <strong>{album.title}</strong> - {album.summary}
             </p>
             {album.imageURL?.url && (
-              <img src={album.imageURL.url} alt={album.title} />
+              <img 
+                src={album.imageURL.url} 
+                alt={album.title} 
+                style={{ maxWidth: "200px", maxHeight: "150px" }}
+              />
             )}
-            <button onClick={() => handleDelete(album._id)}>Supprimer</button>
+            <button 
+              onClick={() => handleDelete(album._id)}
+              disabled={loading}
+            >
+              Supprimer
+            </button>
           </li>
         ))}
       </ul>
@@ -111,4 +145,3 @@ const AlbumsManager = () => {
 };
 
 export default AlbumsManager;
-

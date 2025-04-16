@@ -10,6 +10,9 @@ export const createAlbum = async (req, res, next) => {
   // destructurer les données du corps de la requête.
 
   try {
+    console.log("fichier reçu", req.file);
+    console.log("fi", req.body);
+
     const { title, summary } = req.body;
 
     //Créer un nouvel album.

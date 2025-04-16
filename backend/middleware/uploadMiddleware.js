@@ -4,7 +4,7 @@ import multer from "multer";
 import fs from "fs";
 
 // Définir le répertoire où les fichiers seront téléchargés
-const uploadDir = "upload";
+const uploadDir = "uploads";
 
 // Vérifie si le répertoire d'upload existe. S'il n'existe pas, il est créé.
 if (!fs.existsSync(uploadDir)) {
