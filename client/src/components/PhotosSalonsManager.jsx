@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosConfig from '../Services/AxiosConfig';
 
 const PhotosSalonsManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -11,7 +11,7 @@ const PhotosSalonsManager = () => {
 
   const fetchPhotos = async () => {
     try {
-      const res = await axios.get('http://localhost:3007/api/photos?categorie=salons');
+      const res = await axiosConfig.get('/photos?categorie=salons');
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error("Erreur récupération photos salons:", err);
@@ -27,7 +27,7 @@ const PhotosSalonsManager = () => {
     formData.append("categorie", "salons");
 
     try {
-      await axios.post("http://localhost:3007/api/photos/create", formData, {
+      await axiosConfig.post("/photos/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
@@ -39,11 +39,15 @@ const PhotosSalonsManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3007/api/photos/${id}`);
+      await axiosConfig.delete(`/photos/${id}`);
       fetchPhotos();
     } catch (err) {
       console.error('Erreur lors de la suppression :', err);
     }
+  };
+  const handleEdit = (photo) => {
+    console.log("Édition non encore implémentée pour :", photo);
+    // Ici tu pourras ouvrir un champ ou modal pour changer l’image
   };
 
   return (
@@ -59,7 +63,10 @@ const PhotosSalonsManager = () => {
         {photos.map(photo => (
           <div key={photo._id} style={styles.photoItem}>
             <img src={photo.imageURL} alt="Salon" style={styles.image} />
-            <button onClick={() => handleDelete(photo._id)} style={styles.deleteBtn}>Supprimer</button>
+            <div style={styles.buttonGroup}>
+              <button onClick={() => handleDelete(photo._id)} style={styles.deleteBtn}>Supprimer</button>
+              <button onClick={() => handleEdit(photo)} style={styles.editBtn}>Modifier</button>
+            </div>
           </div>
         ))}
       </div>
@@ -94,18 +101,30 @@ const styles = {
     width: '100%',
     borderRadius: '8px'
   },
-  deleteBtn: {
+  buttonGroup: {
     position: 'absolute',
     top: '10px',
     right: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '5px'
+  },
+  deleteBtn: {
     backgroundColor: '#dc3545',
     color: 'white',
     border: 'none',
     padding: '6px 10px',
     borderRadius: '4px',
     cursor: 'pointer'
+  },
+  editBtn: {
+    backgroundColor: '#ffc107',
+    color: 'black',
+    border: 'none',
+    padding: '6px 10px',
+    borderRadius: '4px',
+    cursor: 'pointer'
   }
 };
-
 
 export default PhotosSalonsManager;

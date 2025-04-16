@@ -11,16 +11,13 @@ import Skates from './pages/Skates';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import DashboardAdmin from './components/DashboardAdmin';
 import LoginPage from './components/LoginPage';
-// import PrivateRoute from './components/PrivateRoute';
-// import { AuthProvider } from './components/AuthContext';
-
 import './App.css';
 
 const App = () => {
   return (
     
     <Router>
-      {/* <AuthProvider>  */}
+      
         <Navbar />
         
         <Routes>
@@ -32,14 +29,7 @@ const App = () => {
           <Route path='/photos-salons' element={<PhotosSalons />} />
           <Route path='/albums/:id' element={<AlbumDetailPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route
-            path='/admin'
-            element={
-              // <PrivateRoute>
-                <DashboardAdmin />
-              // </PrivateRoute>
-            }
-          />
+          <Route path='/admin' element={<DashboardAdmin />} />
         </Routes>
 
         <div className="contact-wrapper">
@@ -49,7 +39,7 @@ const App = () => {
         </div>
 
         <Footer />
-      {/* </AuthProvider> */}
+      
     </Router>
   );
 };

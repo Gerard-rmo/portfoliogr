@@ -28,10 +28,6 @@ const AlbumsManager = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAlbums();
-  }, []);git 
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setNewAlbum((prev) => ({
@@ -50,7 +46,7 @@ const AlbumsManager = () => {
     }
 
     try {
-      await axios.post("http://localhost:3007/api/albums", formData);
+      await axios.post("http://localhost:3007/api/albums/create", formData);
       setNewAlbum({ title: "", summary: "", image: null });
       fetchAlbums();
     } catch (error) {

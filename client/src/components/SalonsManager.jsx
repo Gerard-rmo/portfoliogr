@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosConfig from '../Services/AxiosConfig';
 
 const SalonsManager = () => {
   const [salons, setSalons] = useState([]);
-  const [formData, setFormData] = useState({ date: '', ville: '' });
+  const [formData, setFormData] = useState({ date: '', lieu: '' });
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const SalonsManager = () => {
 
   const fetchSalons = async () => {
     try {
-      const res = await axios.get('http://localhost:3007/api/dates');
+      const res = await axiosConfig.get('/dates');
       setSalons(res.data);
     } catch (err) {
       console.error('Erreur lors du chargement des salons :', err);
@@ -27,16 +27,16 @@ const SalonsManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.date || !formData.ville) return;
+    if (!formData.date || !formData.lieu) return;
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3007/api/dates/${editingId}`, formData);
+        await axiosConfig.put(`http://localhost:3007/api/dates/${editingId}`, formData);
       } else {
-        await axios.post('http://localhost:3007/api/dates', formData);
+        await axiosConfig.post('http://localhost:3007/api/dates', formData);
       }
 
-      setFormData({ date: '', ville: '' });
+      setFormData({ date: '', lieu: '' });
       setEditingId(null);
       fetchSalons();
     } catch (err) {
@@ -45,13 +45,13 @@ const SalonsManager = () => {
   };
 
   const handleEdit = (salon) => {
-    setFormData({ date: salon.date, ville: salon.ville });
+    setFormData({ date: salon.date, lieu: salon.lieu });
     setEditingId(salon._id);
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3007/api/dates/${id}`);
+      await axiosConfig.delete(`/dates/${id}`);
       fetchSalons();
     } catch (err) {
       console.error('Erreur lors de la suppression :', err);
@@ -72,9 +72,9 @@ const SalonsManager = () => {
         />
         <input
           type="text"
-          name="ville"
-          placeholder="Ville"
-          value={formData.ville}
+          name="lieu"
+          placeholder="lieu"
+          value={formData.lieu}
           onChange={handleChange}
           required
         />
@@ -86,7 +86,7 @@ const SalonsManager = () => {
       <ul style={styles.list}>
         {salons.map(salon => (
           <li key={salon._id} style={styles.listItem}>
-            <span>{salon.date} - {salon.ville}</span>
+            <span>{salon.date} - {salon.lieu}</span>
             <div style={styles.btnGroup}>
               <button onClick={() => handleEdit(salon)} style={styles.editBtn}>Modifier</button>
               <button onClick={() => handleDelete(salon._id)} style={styles.deleteBtn}>Supprimer</button>
