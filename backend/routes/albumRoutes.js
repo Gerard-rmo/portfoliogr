@@ -9,6 +9,7 @@ import {
   updateAlbum,
   deleteAlbum,
   getAllAlbum,
+  getAlbumById,
 } from "../controllers/albumControllers.js";
 
 const router = express.Router();
@@ -26,5 +27,7 @@ router.put("/:id", upload.single("imageURL"), updateAlbum);
 
 // Route pour supprimer un album par son ID
 router.delete("/:id", deleteAlbum);
+
+router.get("/:id", getAlbumById);
 
 export default router;

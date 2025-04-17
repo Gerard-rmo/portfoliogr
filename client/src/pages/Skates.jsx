@@ -23,7 +23,7 @@ const Skates = () => {
       <ul className="photo-list">
         {skates.map((skate, index) => (
           <li key={index} className="photo-item">
-            <img src={skate.imageURL?.url} alt={`Skate ${index}`} className="photo" />
+            <img src={skate.imageURL?.url} alt={`Skate ${index}`} className="photoSk" />
           </li>
         ))}
       </ul>

@@ -10,8 +10,6 @@ export const createAlbum = async (req, res, next) => {
   // destructurer les données du corps de la requête.
 
   try {
-    console.log("fichier reçu", req.file);
-    console.log("fi", req.body);
 
     const { title, summary } = req.body;
 
@@ -126,6 +124,18 @@ export const deleteAlbum = async (req, res, next) => {
     }
     await Album.findByIdAndDelete(req.params.id);
     res.status(204).json({ message: `Album supprimé avec succès.` });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAlbumById = async (req, res, next) => {
+  try {
+    const album = await Album.findById(req.params.id);
+    if (!album) {
+      return res.status(404).json({ message: "Album non trouvé" });
+    }
+    res.status(200).json(album);
   } catch (error) {
     next(error);
   }

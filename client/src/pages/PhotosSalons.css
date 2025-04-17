@@ -46,11 +46,14 @@
   align-items: center;
 }
 
-.photo {
+.photoSa {
   width: 100%;
   height: auto;
-  max-width: 200px;
+  max-width: 250px;
   border-radius: 8px;
+}
+.photoSa:hover {
+  transform: scale(1.3);
 }
 
 /* Responsive styles */
@@ -58,8 +61,11 @@
   .photo-item {
     max-width: 45%;
   }
-  .photo {
-    max-width: 150px;
+  .photoSa {
+    max-width: 200px;
+  }
+  .photoSa:hover {
+    transform: scale(1.3);
   }
 }
 
@@ -67,7 +73,10 @@
   .photo-item {
     max-width: 90%;
   }
-  .photo {
-    max-width: 120px;
+  .photoSa {
+    max-width: 180px;
+  }
+  .photoSa:hover {
+    transform: scale(1.3);
   }
 }

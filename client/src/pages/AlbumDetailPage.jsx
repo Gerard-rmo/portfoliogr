@@ -8,8 +8,9 @@ const AlbumDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axiosConfig.get(`/api/albums/${id}`)
+    axiosConfig.get(`/albums/${id}`)
       .then(res => {
+        console.log("Album data:", res.data);
         setAlbum(res.data);
         setLoading(false);
       })
@@ -24,8 +25,15 @@ const AlbumDetailPage = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>{album.titre}</h1>
-      <img src={album.couverture} alt={album.titre} style={styles.cover} />
+      <h1 style={styles.title}>{album.title}</h1>
+      <img 
+        src={album.imageURL?.url} 
+        alt={album.title} 
+        style={styles.cover} 
+        onError={(e) => {
+          e.target.src = 'path/to/default/image.jpg'; 
+        }}
+      />
       <p style={styles.summary}>{album.summary}</p>
     </div>
   );
@@ -61,4 +69,3 @@ const styles = {
 };
 
 export default AlbumDetailPage;
-

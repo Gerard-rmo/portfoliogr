@@ -8,7 +8,7 @@ import DatesSalons from './pages/DatesSalons';
 import PhotosPresse from './pages/PhotosPresse';
 import PhotosSalons from './pages/PhotosSalons';
 import Skates from './pages/Skates';
-import AlbumDetailPage from './components/AlbumDetailPage';
+import AlbumDetailPage from './pages/AlbumDetailPage';
 import DashboardAdmin from './components/DashboardAdmin';
 import LoginPage from './components/LoginPage';
 import './App.css';

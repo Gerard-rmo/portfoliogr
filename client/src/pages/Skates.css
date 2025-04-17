@@ -34,7 +34,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
 }
 
 .photo-item {
@@ -44,11 +44,14 @@
   align-items: center;
 }
 
-.photo {
+.photoSk {
   width: 100%;
   height: auto;
   max-width: 200px;
   border-radius: 8px;
+}
+.photoSk:hover {
+  transform: scale(1.2);
 }
 
 /* Responsive styles */
@@ -56,8 +59,11 @@
   .photo-item {
     max-width: 45%;
   }
-  .photo {
+  .photoSk {
     max-width: 150px;
+  }
+  .photoSk:hover {
+    transform: scale(1.2);
   }
 }
 
@@ -65,7 +71,10 @@
   .photo-item {
     max-width: 90%;
   }
-  .photo {
+  .photoSk {
     max-width: 120px;
+  }
+  .photoSk:hover {
+    transform: scale(1.3);
   }
 }

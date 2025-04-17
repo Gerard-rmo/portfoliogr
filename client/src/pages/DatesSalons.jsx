@@ -36,7 +36,7 @@ const DatesSalons = () => {
 
   return (
     <div className="dates-salons">
-      <h1>MES PROCHAINES DATES DE SALONS</h1>
+      <h1 className='title-salons'>MES PROCHAINES DATES DE SALONS</h1>
       <ul>
         {dates.map(date => (
           <li key={date._id}>

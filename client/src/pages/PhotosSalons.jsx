@@ -23,7 +23,7 @@ const PhotosSalons = () => {
       <ul className="photo-list">
         {photosSalons.map((photo, index) => (
           <li key={index} className="photo-item">
-            <img src={photo.imageURL?.url} alt={`Salon ${index}`} className="photo" />
+            <img src={photo.imageURL?.url} alt={`Salon ${index}`} className="photoSa" />
           </li>
         ))}
       </ul>

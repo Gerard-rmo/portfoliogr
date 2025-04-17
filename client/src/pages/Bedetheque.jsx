@@ -9,9 +9,9 @@ const Bedetheque = () => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    axiosConfig.get('/albums') // '/api/albums'
+    axiosConfig.get('/albums') 
       .then(res => {
-        // aU CAS IL RECOIT UN OBJET OU UN TABLEAU
+        
         const data = Array.isArray(res.data) 
           ? res.data 
           : res.data.albums || res.data.allAlbum || [];
@@ -24,8 +24,6 @@ const Bedetheque = () => {
     <div className="bedetheque-container">
       <img src={logo} alt="Logo du glaive production" className="logo" />
       <p className="bedetheque-title">MA BEDETHEQUE</p>
-
-      <h2 className="section-title">Ma prefere</h2>
 
       <div className="gallery">
         {albums.map((album) => (
