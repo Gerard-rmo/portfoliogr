@@ -14,10 +14,10 @@ const PhotosSkatesManager = () => {
   const fetchPhotos = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:3007/api/photos?categorie=skates");
+      const res = await axios.get("http://localhost:3007/api/photos?categorie=skate");
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
-      console.error('Erreur lors du chargement des photos skates :', err);
+      console.error('Erreur chargement:', err);
       setError("Impossible de charger les photos");
     } finally {
       setLoading(false);
@@ -27,39 +27,33 @@ const PhotosSkatesManager = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!image) return;
-
-    setLoading(true);
-    setError(null);
+  
     const formData = new FormData();
-    formData.append("imageURL", image);
-    formData.append("categorie", "skates");
-
+    formData.append("image", image);
+    formData.append("categorie", "skate");
+  
     try {
-      await axios.post("http://localhost:3007/api/photos/create", formData, {
+      await axios.post("http://localhost:3007/api/photos", formData, { // 
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
       fetchPhotos();
     } catch (error) {
-      console.error("Erreur lors de l'upload :", error);
-      setError("Échec de l'upload de la photo");
-    } finally {
-      setLoading(false);
+      console.error("Upload error:", error.response?.data || error.message);
+      setError("Échec de l'upload");
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette photo ?")) {
-      return;
-    }
+    if (!window.confirm("Supprimer cette photo ?")) return;
     
     try {
       setLoading(true);
       await axios.delete(`http://localhost:3007/api/photos/${id}`);
       fetchPhotos();
     } catch (err) {
-      console.error('Erreur lors de la suppression :', err);
-      setError("Échec de la suppression de la photo");
+      console.error('Erreur suppression:', err);
+      setError("Échec de la suppression");
     } finally {
       setLoading(false);
     }
@@ -68,8 +62,7 @@ const PhotosSkatesManager = () => {
   return (
     <div>
       <h2>Gérer les photos de skates</h2>
-      
-      {error && <div style={{ color: 'red', marginBottom: '15px' }}>{error}</div>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
 
       <form onSubmit={handleUpload} style={styles.form}>
         <input 
@@ -83,17 +76,10 @@ const PhotosSkatesManager = () => {
         </button>
       </form>
 
-      {loading && <p>Chargement...</p>}
-
       <div style={styles.photoGrid}>
         {photos.map(photo => (
           <div key={photo._id} style={styles.photoItem}>
-            {/* Correction de skate.imageURL à photo.imageURL */}
-            <img 
-              src={photo.imageURL?.url || photo.imageURL} 
-              alt="Skate" 
-              style={styles.image} 
-            />
+            <img src={photo.imageURL?.url} alt="Skate" style={styles.image} />
             <button 
               onClick={() => handleDelete(photo._id)} 
               style={styles.deleteBtn}
@@ -107,6 +93,7 @@ const PhotosSkatesManager = () => {
     </div>
   );
 };
+
 
 const styles = {
   form: {
@@ -135,10 +122,15 @@ const styles = {
     width: '100%',
     borderRadius: '8px'
   },
-  deleteBtn: {
+  buttonGroup: {
     position: 'absolute',
     top: '10px',
     right: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '5px'
+  },
+  deleteBtn: {
     backgroundColor: '#dc3545',
     color: 'white',
     border: 'none',

@@ -5,64 +5,100 @@ const SalonsManager = () => {
   const [salons, setSalons] = useState([]);
   const [formData, setFormData] = useState({ date: '', lieu: '' });
   const [editingId, setEditingId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     fetchSalons();
   }, []);
 
   const fetchSalons = async () => {
+    setLoading(true);
     try {
       const res = await axiosConfig.get('/dates');
       setSalons(res.data);
     } catch (err) {
-      console.error('Erreur lors du chargement des salons :', err);
+      setError('Failed to load dates');
+      console.error('Fetch error:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!formData.date || !formData.lieu) return;
+    setError(null);
+    setSuccess(null);
 
     try {
-      if (editingId) {
-        await axiosConfig.put(`http://localhost:3007/api/dates/${editingId}`, formData);
-      } else {
-        await axiosConfig.post('http://localhost:3007/api/dates', formData);
-      }
+      const payload = {
+        ...formData,
+        date: new Date(formData.date).toISOString()
+      };
 
+      let response;
+      if (editingId) {
+        response = await axiosConfig.put(`/dates/${editingId}`, payload);
+        setSuccess('Date updated successfully');
+      } else {
+        response = await axiosConfig.post('/dates', payload);
+        setSuccess('Date added successfully');
+      }
+      
       setFormData({ date: '', lieu: '' });
       setEditingId(null);
       fetchSalons();
     } catch (err) {
-      console.error('Erreur lors de la soumission :', err);
+      setError(err.response?.data?.message || 'Submission failed');
+      console.error('Submit error:', err);
     }
   };
 
   const handleEdit = (salon) => {
-    setFormData({ date: salon.date, lieu: salon.lieu });
+    setFormData({
+      date: salon.date.split('T')[0],
+      lieu: salon.lieu
+    });
     setEditingId(salon._id);
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm('Delete this date?')) return;
+    
     try {
       await axiosConfig.delete(`/dates/${id}`);
-      fetchSalons();
+      setSalons(prev => prev.filter(s => s._id !== id));
+      setSuccess('Date deleted');
     } catch (err) {
-      console.error('Erreur lors de la suppression :', err);
+      setError('Failed to delete');
+      console.error('Delete error:', err);
     }
   };
 
-  return (
-    <div>
-      <h2>Gérer les dates de salons</h2>
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-      <form onSubmit={handleSubmit} style={styles.form}>
+  if (loading) return <div className="loading">Loading...</div>;
+
+  return (
+    <div className="salons-manager">
+      <h2>Gerer les dates des salons</h2>
+      
+      {error && <div className="error">{error}</div>}
+      {success && <div className="success">{success}</div>}
+
+      <form onSubmit={handleSubmit}>
         <input
           type="date"
           name="date"
@@ -73,79 +109,37 @@ const SalonsManager = () => {
         <input
           type="text"
           name="lieu"
-          placeholder="lieu"
+          placeholder="Location"
           value={formData.lieu}
           onChange={handleChange}
           required
         />
-        <button type="submit" style={styles.submitBtn}>
-          {editingId ? 'Modifier' : 'Ajouter'}
+        <button type="submit">
+          {editingId ? 'Mettre à jour' : 'Ajouter'} date de salon
         </button>
+        {editingId && (
+          <button type="button" onClick={() => setEditingId(null)}>
+            Annuler
+          </button>
+        )}
       </form>
 
-      <ul style={styles.list}>
+      <ul className="dates-list">
         {salons.map(salon => (
-          <li key={salon._id} style={styles.listItem}>
-            <span>{salon.date} - {salon.lieu}</span>
-            <div style={styles.btnGroup}>
-              <button onClick={() => handleEdit(salon)} style={styles.editBtn}>Modifier</button>
-              <button onClick={() => handleDelete(salon._id)} style={styles.deleteBtn}>Supprimer</button>
+          <li key={salon._id}>
+            <div>
+              <strong>{formatDate(salon.date)}</strong>
+              <p>{salon.lieu}</p>
+            </div>
+            <div>
+              <button onClick={() => handleEdit(salon)}>Modifier</button>
+              <button onClick={() => handleDelete(salon._id)}>Supprimer</button>
             </div>
           </li>
         ))}
       </ul>
     </div>
   );
-};
-
-const styles = {
-  form: {
-    display: 'flex',
-    gap: '10px',
-    marginBottom: '20px',
-    alignItems: 'center'
-  },
-  submitBtn: {
-    padding: '8px 16px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer'
-  },
-  list: {
-    listStyle: 'none',
-    padding: 0
-  },
-  listItem: {
-    padding: '10px',
-    backgroundColor: '#f8f9fa',
-    marginBottom: '10px',
-    borderRadius: '6px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  btnGroup: {
-    display: 'flex',
-    gap: '10px'
-  },
-  editBtn: {
-    backgroundColor: '#ffc107',
-    color: '#000',
-    border: 'none',
-    padding: '6px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer'
-  },
-  deleteBtn: {
-    backgroundColor: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    padding: '6px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer'
-  }
 };
 
 export default SalonsManager;

@@ -7,31 +7,29 @@ const PhotosPresse = () => {
   const [photosPresse, setPhotosPresse] = useState([]);
 
   useEffect(() => {
-    axiosConfig.get('/api/photos') 
+    axiosConfig.get('/photos') 
       .then(res => {
         const data = Array.isArray(res.data) ? res.data : res.data.photos || [];
         const presseOnly = data.filter(photo => photo.categorie === "presse");
         setPhotosPresse(presseOnly);
       })
-      .catch(err => console.error("Erreur chargement photos presse :", err));
+      .catch(err => console.error("Erreur chargement:", err));
   }, []);
 
   return (
     <div className="photos-presse-container">
-      <img src={logo} alt="Logo du glaive production" className="logo" />
-            <p className="bedetheque-title">MES ARTICLES DE PRESSE</p>
+      <img src={logo} alt="Logo" className="logo" />
+      <p className="bedetheque-title">MES ARTICLES DE PRESSE</p>
       <ul className="photo-list">
         {photosPresse.map((photo, index) => (
           <li key={index} className="photo-item">
-            <img src={photo.imageURL?.url || photo.url} alt={`Presse ${index}`} className="photo" />
+            <img src={photo.imageURL?.url} alt={`Presse ${index}`} className="photo" />
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
-
 
 export default PhotosPresse;
 

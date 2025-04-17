@@ -7,23 +7,23 @@ const PhotosSalons = () => {
   const [photosSalons, setPhotosSalons] = useState([]);
 
   useEffect(() => {
-    axiosConfig.get('/api/photos') 
+    axiosConfig.get('/photos') 
       .then(res => {
         const data = Array.isArray(res.data) ? res.data : res.data.photos || [];
         const salonsOnly = data.filter(photo => photo.categorie === "salon");
         setPhotosSalons(salonsOnly);
       })
-      .catch(err => console.error("Erreur chargement photos salons :", err));
+      .catch(err => console.error("Erreur chargement:", err));
   }, []);
 
   return (
     <div className="photos-salons-container">
-      <img src={logo} alt="Logo du glaive production" className="logo" />
-            <p className="bedetheque-title">MES PHOTOS DE SALONS</p>
+      <img src={logo} alt="Logo" className="logo" />
+      <p className="bedetheque-title">MES PHOTOS DE SALONS</p>
       <ul className="photo-list">
         {photosSalons.map((photo, index) => (
           <li key={index} className="photo-item">
-            <img src={photo.imageURL?.url || photo.url} alt={`Salon ${index}`} className="photo" />
+            <img src={photo.imageURL?.url} alt={`Salon ${index}`} className="photo" />
           </li>
         ))}
       </ul>

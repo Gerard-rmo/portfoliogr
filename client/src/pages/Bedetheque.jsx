@@ -9,9 +9,12 @@ const Bedetheque = () => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    axiosConfig.get('/api/albums')
+    axiosConfig.get('/albums') // '/api/albums'
       .then(res => {
-        const data = Array.isArray(res.data) ? res.data : res.data.albums || [];
+        // aU CAS IL RECOIT UN OBJET OU UN TABLEAU
+        const data = Array.isArray(res.data) 
+          ? res.data 
+          : res.data.albums || res.data.allAlbum || [];
         setAlbums(data);
       })
       .catch(err => console.error("Erreur chargement albums :", err));
@@ -22,17 +25,21 @@ const Bedetheque = () => {
       <img src={logo} alt="Logo du glaive production" className="logo" />
       <p className="bedetheque-title">MA BEDETHEQUE</p>
 
-      <h2 className="section-title"></h2>
+      <h2 className="section-title">Ma prefere</h2>
 
       <div className="gallery">
         {albums.map((album) => (
           <div
             key={album._id}
             className="album-card"
-            onClick={() => navigate(`/albums/${album._id}`)} // assure-toi que ta route est bien définie côté React Router
+            onClick={() => navigate(`/albums/${album._id}`)}
           >
-           <img src={album.couverture} alt={album.titre} className="cover-image" />
-           <p className="album-title">{album.titre}</p>
+           <img 
+             src={album.imageURL?.url || album.couverture} 
+             alt={album.titre || album.title} 
+             className="cover-image" 
+           />
+           <p className="album-title">{album.titre || album.title}</p>
           </div>
         ))}
       </div>

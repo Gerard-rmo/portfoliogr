@@ -1,8 +1,5 @@
-// Importation des modules
 import express from "express";
 import { upload } from "../middleware/uploadMiddleware.js";
-
-// Importation des controllers
 import {
   createPhoto,
   updatePhoto,
@@ -12,18 +9,10 @@ import {
 
 const router = express.Router();
 
-// Création des routes
-
-// Route pour l'enregistrement d'une photo
-router.post("/create", upload.single("imageURL"), createPhoto);
-
-// Route pour récupérer toutes les photos
+// Updated routes
+router.post("/", upload.single("image"), createPhoto); 
 router.get("/", getAllPhotos);
-
-// Route pour mettre à jour une photo par son ID
-router.put("/:id", upload.single("imageURL"), updatePhoto);
-
-// Route pour supprimer une photo par son ID
+router.put("/:id", upload.single("image"), updatePhoto);
 router.delete("/:id", deletePhoto);
 
 export default router;

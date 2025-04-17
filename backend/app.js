@@ -36,13 +36,26 @@ app.use(
 // Middleware pour sécuriser l'application
 app.use(helmet());
 
-// Limite de requêtes pour éviter le spam
-const limiter = rateLimit({
+// Rate limiting middleware pour limiter le nombre de requêtes
+// à l'API afin de prévenir les abus
+const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50, // 50 requêtes
+  max: 500, 
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    status: 429,
+    message: "Trop de requêtes, veuillez réessayer plus tard"
+  },
+  skip: (req) => {
+    // Skip rate limiting for local development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
-app.use(limiter); // Utilisation du middleware de limitation des requêtes
+// Application du middleware de limitation de taux à toutes les requêtes vers l'API
+// limite le nombre de requêtes à 500 toutes les 15 minutes
+app.use("/api/", apiLimiter);
 
 // Middleware pour analyser les requêtes avec des URL encodées
 app.use(express.urlencoded({ extended: true }));

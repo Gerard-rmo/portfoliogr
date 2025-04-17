@@ -1,33 +1,47 @@
 import { useEffect, useState } from 'react';
-import logo from '../assets/logo.webp';
 import axiosConfig from "../Services/AxiosConfig";
 import './DatesSalons.css';
 
-const Salons = () => {
-  const [salons, setSalons] = useState([]);
+const DatesSalons = () => {
+  const [dates, setDates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axiosConfig.get('/api/photos')
-      .then(res => {
-        const data = Array.isArray(res.data) ? res.data : res.data.photos || [];
-        setSalons(data);
-      })
-      .catch(err => console.error("Erreur chargement salons :", err));
+    const fetchDates = async () => {
+      try {
+        const res = await axiosConfig.get('/dates');
+        setDates(res.data);
+      } catch (err) {
+        setError('Failed to load dates');
+        console.error('Fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDates();
   }, []);
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  if (loading) return <div>Loading dates...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <div className="salons-container">
-     <img src={logo} alt="Logo du glaive production" className="logo" />
-           <p className="bedetheque-title">MES DATES DE SALONS</p>
-      <ul className="salons-list">
-        {salons.map((salon, index) => (
-          <li key={index} className="salon-item">
-            <h3>{salon.nom || "Nom indisponible"}</h3>
-            <img
-              src={salon.imageURL?.url || salon.url}
-              alt={salon.nom || "salon"}
-              className="salon-image"
-            />
+    <div className="dates-salons">
+      <h1>MES PROCHAINES DATES DE SALONS</h1>
+      <ul>
+        {dates.map(date => (
+          <li key={date._id}>
+            <h3>{formatDate(date.date)}</h3>
+            <p>{date.lieu}</p>
           </li>
         ))}
       </ul>
@@ -35,7 +49,7 @@ const Salons = () => {
   );
 };
 
-export default Salons;
+export default DatesSalons;
 
 
 

@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
 
-// Création du schéma de données pour les dates de salon
-
-const DateSchema = new mongoose.Schema({
+const SalonDateSchema = new mongoose.Schema({
   date: {
-    type: String,
-    trim: true,
+    type: Date,
     required: true,
   },
   lieu: {
@@ -15,6 +12,4 @@ const DateSchema = new mongoose.Schema({
   },
 });
 
-// Exportation du modèle de données pour les dates de salon.
-
-export default mongoose.model("Date", DateSchema);
+export default mongoose.model("SalonDate", SalonDateSchema);

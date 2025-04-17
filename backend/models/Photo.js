@@ -1,12 +1,18 @@
 import mongoose from "mongoose";
 
 const photoSchema = new mongoose.Schema({
-  imageURL: { type: String, required: true },
+  imageURL: {
+    type: {
+      public_id: String,
+      url: String
+    },
+    required: true
+  },
   categorie: {
     type: String,
-    enum: ["salon", "skate", "presse"],
     required: true,
-  },
+    enum: ['salon', 'presse', 'skate'] 
+  }
 });
 
 const Photo = mongoose.model("Photo", photoSchema);

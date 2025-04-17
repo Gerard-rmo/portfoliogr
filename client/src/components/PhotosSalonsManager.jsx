@@ -11,7 +11,7 @@ const PhotosSalonsManager = () => {
 
   const fetchPhotos = async () => {
     try {
-      const res = await axiosConfig.get('/photos?categorie=salons');
+      const res = await axiosConfig.get('/photos?categorie=salon');
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error("Erreur récupération photos salons:", err);
@@ -21,19 +21,19 @@ const PhotosSalonsManager = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!image) return;
-
+  
     const formData = new FormData();
-    formData.append("imageURL", image);
-    formData.append("categorie", "salons");
-
+    formData.append("image", image); // 
+    formData.append("categorie", "salon"); //
+  
     try {
-      await axiosConfig.post("/photos/create", formData, {
+      await axiosConfig.post("/photos", formData, { // 
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
       fetchPhotos();
     } catch (err) {
-      console.error('Erreur lors de l\'upload :', err);
+      console.error('Upload error:', err.response?.data || err.message);
     }
   };
 
@@ -42,18 +42,13 @@ const PhotosSalonsManager = () => {
       await axiosConfig.delete(`/photos/${id}`);
       fetchPhotos();
     } catch (err) {
-      console.error('Erreur lors de la suppression :', err);
+      console.error('Erreur suppression:', err);
     }
-  };
-  const handleEdit = (photo) => {
-    console.log("Édition non encore implémentée pour :", photo);
-    // Ici tu pourras ouvrir un champ ou modal pour changer l’image
   };
 
   return (
     <div>
       <h2>Gérer les photos des salons</h2>
-
       <form onSubmit={handleUpload} style={styles.form}>
         <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
         <button type="submit" style={styles.uploadBtn}>Ajouter</button>
@@ -62,10 +57,9 @@ const PhotosSalonsManager = () => {
       <div style={styles.photoGrid}>
         {photos.map(photo => (
           <div key={photo._id} style={styles.photoItem}>
-            <img src={photo.imageURL} alt="Salon" style={styles.image} />
+            <img src={photo.imageURL?.url} alt="Salon" style={styles.image} />
             <div style={styles.buttonGroup}>
               <button onClick={() => handleDelete(photo._id)} style={styles.deleteBtn}>Supprimer</button>
-              <button onClick={() => handleEdit(photo)} style={styles.editBtn}>Modifier</button>
             </div>
           </div>
         ))}
@@ -112,14 +106,6 @@ const styles = {
   deleteBtn: {
     backgroundColor: '#dc3545',
     color: 'white',
-    border: 'none',
-    padding: '6px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer'
-  },
-  editBtn: {
-    backgroundColor: '#ffc107',
-    color: 'black',
     border: 'none',
     padding: '6px 10px',
     borderRadius: '4px',

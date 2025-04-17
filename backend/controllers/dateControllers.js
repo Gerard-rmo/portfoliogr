@@ -1,72 +1,75 @@
-import Date from "../models/Date.js";
+import SalonDate from "../models/Date.js";
 import dotenv from "dotenv";
 dotenv.config();
-
-// Fonction pour enregistrer une nouvelle date de salon
 
 export const registerDate = async (req, res, next) => {
   try {
     const { date, lieu } = req.body;
-
+    
     if (!date || !lieu) {
-      return next({
-        statusCode: 400,
-        message: `Tous les champs doivent être remplis.`,
+      return res.status(400).json({ 
+        success: false,
+        message: 'Date et lieu necessaires' 
       });
     }
-    const dates = await Date.create({ date, lieu, });
 
-    res.status(201).json({ message: `L'évènement a bien été créé.`, dates });
+    const newDate = await SalonDate.create({ 
+      date,
+      lieu 
+    });
+
+    res.status(201).json({
+      success: true,
+      date: newDate
+    });
   } catch (error) {
-    next(error);
+    console.error('Creation error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
   }
 };
-
-//Sélectionner toutes les dates.
 
 export const getAllDate = async (req, res, next) => {
   try {
-    const allDate = await Date.find().select();
-    //Sélectionne toutes les dates.
-    res.status(200).json({
-      message: `Récupération correcte de toutes les dates de salon.`,
-      allDate,
-    });
+    const dates = await SalonDate.find().sort({ date: 1 });
+    res.status(200).json(dates);
   } catch (error) {
-    next(error);
+    console.error('Fetch error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des dates'
+    });
   }
 };
-
-// Mise à jour des dates de salon.
 
 export const updateDate = async (req, res, next) => {
-  const { id } = req.params;
-  const newDate = req.body.date;
-  const newLieu = req.body.lieu;
-
   try {
-    const updateDate = await Date.findByIdAndUpdate(
-      id,
-      { date: newDate, lieu: newLieu },
+    const updated = await SalonDate.findByIdAndUpdate(
+      req.params.id,
+      { date: req.body.date, lieu: req.body.lieu },
       { new: true }
     );
-    if (!updateDate) {
-      return res.status(400).json({ message: `Date de salon non trouvée.` });
-    }
-    res.status(202).json(updateDate);
+    res.status(200).json(updated);
   } catch (error) {
-    next(error);
+    console.error('Update error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la mise à jour de la date'
+    });
   }
 };
-
-//Suppression des dates de salon
 
 export const deleteDate = async (req, res, next) => {
   try {
-    await Date.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({ message: `Date supprimée avec succès` });
+    await SalonDate.findByIdAndDelete(req.params.id);
+    res.status(204).end();
   } catch (error) {
-    next(error);
+    console.error('Delete error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la suppression de la date'
+    });
   }
 };

@@ -1,38 +1,37 @@
 import Photo from "../models/Photo.js";
 import { v2 as cloudinary } from "cloudinary";
-import { unlinkSync } from "fs";
+import fs from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 
 // Fonction pour ajouter les photos.
 
 export const createPhoto = async (req, res, next) => {
-  // destructurer les données du corps de la requête.
-
   try {
     const { categorie } = req.body;
 
-    // Vérification si une photo a bien été téléchargée
     if (!req.file || !categorie) {
       return next({
         statusCode: 400,
         message: "Image et catégorie requises.",
       });
     }
-    //Téléchargement de la photo vers Cloudinary
 
     const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "visuels", // Spécifie le dossier sur Cloudinary
-      resource_type: "image", // Type de fichier à uploader
+      folder: "visuels",
+      resource_type: "image",
     });
 
-    // Supprimer le fichier local après le téléchargement
-    FileSystem.unlinkSync(req.file.path);
+    fs.unlinkSync(req.file.path);
 
-    // Créer une nouvelle photo dans la base de données
     const photo = await Photo.create({
-      imageURL: { public_id: result.public_id, url: result.secure_url }, // URL sécurisée de l'image sur Cloudinary
+      imageURL: { 
+        public_id: result.public_id, 
+        url: result.secure_url 
+      },
+      categorie
     });
+    
     res.status(201).json({ message: "Photo créée avec succès.", photo });
   } catch (error) {
     next(error);
