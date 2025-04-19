@@ -47,11 +47,12 @@ const DashboardAdmin = () => {
 const styles = {
   container: {
     padding: '20px',
-    background: 'linear-gradient(90deg, rgba(249,198,58,0.94) 30%, rgba(254,250,123,0.91) 67%, rgb(253,255,161) 100%)',
+    background: 'linear-gradient(90deg, rgba(58, 122, 249, 0.94) 30%, rgba(126, 129, 157, 0.91) 67%, rgb(135, 147, 173) 100%)',
     minHeight: '100vh'
   },
   title: {
     textAlign: 'center',
+    fontFamily:'Verdana, Serif',
     fontSize: '2rem',
     marginBottom: '30px'
   },
@@ -66,7 +67,7 @@ const styles = {
     padding: '10px 20px',
     fontSize: '16px',
     cursor: 'pointer',
-    backgroundColor: '#1e90ff',
+    backgroundColor: ' rgba(244, 143, 49, 0.91)',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
@@ -74,9 +75,10 @@ const styles = {
     transition: 'background-color 0.3s ease',
   },
   content: {
-    maxWidth: '1000px',
-    margin: '0 auto',
-    backgroundColor: '#fff',
+    maxWidth: '100%',
+    margin: '0 10%',
+    textAlign:'center',
+    backgroundColor: 'rgba(204, 225, 254, 0.91)',
     padding: '20px',
     borderRadius: '12px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)'

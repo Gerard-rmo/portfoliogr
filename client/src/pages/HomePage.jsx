@@ -1,4 +1,4 @@
-import './HomePage.css';
+
 import logo from '../assets/logo.webp';
 import ima from '../assets/pres.webp';
 import slide1 from '../assets/T1.jpg';
@@ -39,48 +39,6 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: '20px 0',
-    maxWidth: '100%',
-    margin: '0 auto',
-    background: "linear-gradient(90deg, rgba(249, 198, 58, 0.94) 30%, rgba(254, 250, 123, 0.91) 67%, rgb(253, 255, 161) 100%)",
-  },
-  
-  createLink: {
-    display: 'inline-block',
-    marginBottom: '20px',
-    padding: '10px 20px',
-    backgroundColor: 'blue',
-    color: '#fff',
-    textDecoration: 'none',
-    borderRadius: '5px',
-  },
-
-  logo: {
-    width: '280px', 
-    maxWidth: '300px', 
-    height: 'auto',
-    marginBottom: '5px',
-    
-  },
-
-  p: {
-    fontFamily: "'Verdana', serif", 
-    fontSize: '20px',            
-    fontWeight: 'bold',
-    color: 'rgb(4, 58, 102)',
-    lineHeight: '1.6',
-    margin: '20px auto',
-    padding:'10px',
-    maxWidth: '800px',
-    textShadow: '1px 10px 5px rgb(226, 99, 20)',
-  },
-  
-  
 };
 
 export default HomePage;

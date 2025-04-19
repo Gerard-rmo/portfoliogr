@@ -58,6 +58,7 @@ const styles = {
     borderRadius: '50px',
     textDecoration: 'none',
     fontWeight: 'bold',
+    boxShadow: '0px 0px 20px rgba(21, 13, 63, 0.93)',
   },
   
   

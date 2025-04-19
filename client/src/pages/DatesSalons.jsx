@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosConfig from "../Services/AxiosConfig";
+import logo from '../assets/logo.webp';
 import './DatesSalons.css';
 
 const DatesSalons = () => {
@@ -36,12 +37,14 @@ const DatesSalons = () => {
 
   return (
     <div className="dates-salons">
+      <img src={logo} alt="Logo" className="logo" />
+      
       <h1 className='title-salons'>MES PROCHAINES DATES DE SALONS</h1>
       <ul>
         {dates.map(date => (
           <li key={date._id}>
             <h3>{formatDate(date.date)}</h3>
-            <p>{date.lieu}</p>
+            <p className="date-salons">{date.lieu }</p>
           </li>
         ))}
       </ul>

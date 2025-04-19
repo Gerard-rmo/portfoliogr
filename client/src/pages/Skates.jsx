@@ -19,10 +19,10 @@ const Skates = () => {
   return (
     <div className="photos-skates-container">
       <img src={logo} alt="Logo" className="logo" />
-      <p className="bedetheque-title">PLANCHES DE SKATE DECORATIVES</p>
-      <ul className="photo-list">
+      <p className="bedetheque-title">PLANCHES DE SKATE DECORATIVES (sur commande).</p>
+      <ul className="photo-listSk">
         {skates.map((skate, index) => (
-          <li key={index} className="photo-item">
+          <li key={index} className="photo-itemSk">
             <img src={skate.imageURL?.url} alt={`Skate ${index}`} className="photoSk" />
           </li>
         ))}

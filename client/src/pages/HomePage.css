@@ -3,12 +3,31 @@
   padding: 20px 0;
   max-width: 100%;
   margin: 0 auto;
-  background: linear-gradient(
-    90deg,
-    rgba(249, 198, 58, 0.94) 30%,
-    rgba(254, 250, 123, 0.91) 67%,
-    rgb(253, 255, 161) 100%
-  );
+  position: relative;
+  min-height: 100vh;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cstyle%3E text %7B font-family: 'Bangers', sans-serif; font-weight: bold; fill: rgba(0,0,0,0.1); %7D %3C/style%3E%3Cg%3E%3Ccircle cx='50' cy='50' r='40' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='200' cy='70' r='25' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='20' y='100' font-size='30'%3EBAM!%3C/text%3E%3Ctext x='120' y='170' font-size='35'%3EPOW!%3C/text%3E%3Ctext x='60' y='50' font-size='20'%3EWHAM!%3C/text%3E%3Ccircle cx='80' cy='230' r='15' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='220' cy='220' r='10' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='140' y='240' font-size='18'%3EWOW!%3C/text%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(
+      90deg,
+      rgba(249, 198, 58, 0.94) 30%,
+      rgba(254, 250, 123, 0.91) 67%,
+      rgb(253, 255, 161) 100%
+    );
+  background-repeat: repeat, no-repeat;
+  background-size: 350px 350px, cover;
+  background-attachment: fixed;
+}
+
+.home-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/sketchy.png");
+  opacity: 3.5;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .create-link {
@@ -21,11 +40,16 @@
   border-radius: 5px;
 }
 
-.logo {
-  width: 280px;
-  max-width: 300px;
+.responsive-logo {
+  width: 400px;
+  max-width: 400px;
   height: auto;
   margin-bottom: 5px;
+  box-shadow: 15px 15px 50px rgb(226, 99, 20);
+}
+
+.responsive-logo2 {
+  box-shadow: 20px 10px 2px rgba(29, 18, 4, 0.326);
 }
 
 .home-description {
@@ -78,11 +102,11 @@
 /* Responsive */
 @media (max-width: 768px) {
   .carousel-frise {
-    height: 60vh;
+    height: 40vh;
   }
 
   .carousel-item-frise img {
-    height: 60vh;
+    height: 40vh;
   }
   .home-description {
     font-size: 14px;
@@ -92,11 +116,11 @@
 
 @media (max-width: 480px) {
   .carousel-frise {
-    height: 50vh;
+    height: 30vh;
   }
 
   .carousel-item-frise img {
-    height: 50vh;
+    height: 30vh;
   }
 }
 

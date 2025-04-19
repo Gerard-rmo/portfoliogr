@@ -3,12 +3,19 @@
   padding: 20px 0;
   max-width: 100%;
   margin: 0 auto;
-  background: linear-gradient(
-    90deg,
-    rgba(249, 198, 58, 0.94) 30%,
-    rgba(254, 250, 123, 0.91) 67%,
-    rgb(253, 255, 161) 100%
-  );
+  position: relative;
+  min-height: 100vh;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cstyle%3E text %7B font-family: 'Bangers', sans-serif; font-weight: bold; fill: rgba(0,0,0,0.1); %7D %3C/style%3E%3Cg%3E%3Ccircle cx='50' cy='50' r='40' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='200' cy='70' r='25' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='20' y='100' font-size='30'%3EBAM!%3C/text%3E%3Ctext x='120' y='170' font-size='35'%3EPOW!%3C/text%3E%3Ctext x='60' y='50' font-size='20'%3EWHAM!%3C/text%3E%3Ccircle cx='80' cy='230' r='15' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='220' cy='220' r='10' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='140' y='240' font-size='18'%3EWOW!%3C/text%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(
+      90deg,
+      rgba(249, 198, 58, 0.94) 30%,
+      rgba(254, 250, 123, 0.91) 67%,
+      rgb(253, 255, 161) 100%
+    );
+  background-repeat: repeat, no-repeat;
+  background-size: 350px 350px, cover;
+  background-attachment: fixed;
+
   .logo {
     width: 280px;
     height: auto;
@@ -26,30 +33,86 @@
     max-width: 800px;
     text-shadow: 1px 10px 5px rgb(226, 99, 20);
     text-align: center;
-  margin-bottom: 30px;
-    
+    margin-bottom: 30px;
   }
+}
+.date-salons {
+  font-family: "Verdana", serif;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .dates-salons ul {
   list-style: none;
-  padding: 0;
+  padding: 0 20%;
 }
 
 .dates-salons li {
-  background: #fff;
+  background: #acdcff;
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    90deg,
+    rgba(110, 129, 251, 0.94) 30%,
+    rgba(197, 198, 255, 0.91) 67%,
+    rgb(255, 254, 255) 100%
+  );
 }
 
 .dates-salons h3 {
+  font-family: "Verdana", serif;
   margin: 0 0 10px 0;
-  color: #333;
+  color: black;
 }
 
 .dates-salons p {
   margin: 0;
-  color: #666;
+  color: black;
+}
+.dates-salons li {
+  border-left: 5px solid rgba(4, 58, 102, 0.8);
+  border-right: 5px solid rgba(4, 58, 102, 0.8);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dates-salons li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(4, 58, 102, 0.2);
+}
+
+.dates-salons li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1000%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(4, 58, 102, 0.05) 0%,
+    rgba(4, 58, 102, 0.1) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dates-salons li * {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .dates-salons h4 {
+    font-family: "Verdana", serif;
+    margin: 0 0 10px 0;
+    color: black;
+  }
+
+  .dates-salons p {
+    margin: 0;
+    color: black;
+  }
 }

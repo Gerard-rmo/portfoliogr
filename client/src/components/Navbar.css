@@ -1,4 +1,4 @@
-/* --- Général --- */
+/* --- Général ---
 .navbar {
   background-color: rgb(28, 91, 143);
   padding: 13px;
@@ -30,44 +30,6 @@
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
-}
+  box-shadow: 20px 10px 2px rgba(29, 18, 4, 0.326);
+} */
 
-/* --- Bouton Mode Nuit --- */
-.dark-mode-toggle {
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 16px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.dark-mode-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* --- Mode nuit global --- */
-body.dark-mode {
-  background-color: #121212;
-  color: #eee;
-}
-
-body.dark-mode .navbar {
-  background-color: #1f1f1f;
-}
-
-body.dark-mode .btn-link {
-  background-color: #333;
-  color: #ffcc00;
-}
-
-body.dark-mode .nav-link {
-  color: #ccc;
-}
-
-body.dark-mode .dark-mode-toggle {
-  border-color: #ccc;
-  color: #ccc;
-}

@@ -20,10 +20,10 @@ const PhotosPresse = () => {
     <div className="photos-presse-container">
       <img src={logo} alt="Logo" className="logo" />
       <p className="bedetheque-title">MES ARTICLES DE PRESSE</p>
-      <ul className="photo-list">
+      <ul className="photo-listPr">
         {photosPresse.map((photo, index) => (
-          <li key={index} className="photo-item">
-            <img src={photo.imageURL?.url} alt={`Presse ${index}`} className="photo" />
+          <li key={index} className="photo-itemPr">
+            <img src={photo.imageURL?.url} alt={`Presse ${index}`} className="photoPr" />
           </li>
         ))}
       </ul>

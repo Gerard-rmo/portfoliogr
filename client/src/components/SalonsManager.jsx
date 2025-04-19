@@ -93,7 +93,7 @@ const SalonsManager = () => {
 
   return (
     <div className="salons-manager">
-      <h2>Gerer les dates des salons</h2>
+      <h2>GESTION DES DATES DE SALONS</h2>
       
       {error && <div className="error">{error}</div>}
       {success && <div className="success">{success}</div>}
@@ -129,7 +129,8 @@ const SalonsManager = () => {
           <li key={salon._id}>
             <div>
               <strong>{formatDate(salon.date)}</strong>
-              <p>{salon.lieu}</p>
+              
+              <p><strong>{salon.lieu}</strong></p>
             </div>
             <div>
               <button onClick={() => handleEdit(salon)}>Modifier</button>

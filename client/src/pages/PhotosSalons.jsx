@@ -20,9 +20,9 @@ const PhotosSalons = () => {
     <div className="photos-salons-container">
       <img src={logo} alt="Logo" className="logo" />
       <p className="bedetheque-title">MES PHOTOS DE SALONS</p>
-      <ul className="photo-list">
+      <ul className="photo-listSa">
         {photosSalons.map((photo, index) => (
-          <li key={index} className="photo-item">
+          <li key={index} className="photo-itemSa">
             <img src={photo.imageURL?.url} alt={`Salon ${index}`} className="photoSa" />
           </li>
         ))}
