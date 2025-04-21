@@ -17,7 +17,7 @@
     background-attachment: fixed;
   }
   
-  .album-detail-container::before {
+  .album-container::before {
     content: "";
     position: absolute;
     top: 0;
