@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosConfig from '../Services/AxiosConfig';
+import './SalonsManager.css';
 
 const SalonsManager = () => {
   const [salons, setSalons] = useState([]);
@@ -93,53 +94,53 @@ const SalonsManager = () => {
 
   return (
     <div className="salons-manager">
-      <h2>GESTION DES DATES DE SALONS</h2>
-      
-      {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="lieu"
-          placeholder="Location"
-          value={formData.lieu}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">
-          {editingId ? 'Mettre à jour' : 'Ajouter'} date de salon
+    <h2 className="salons-title">GESTION DES DATES DE SALONS</h2>
+    
+    {error && <div className="error-message">{error}</div>}
+    {success && <div className="success-message">{success}</div>}
+  
+    <form onSubmit={handleSubmit} className="salons-form">
+      <input
+        type="date"
+        name="date"
+        value={formData.date}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="text"
+        name="lieu"
+        placeholder="Lieu"
+        value={formData.lieu}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit" className="submit-btn">
+        {editingId ? 'Mettre à jour' : 'Ajouter'} date de salon
+      </button>
+      {editingId && (
+        <button type="button" onClick={() => setEditingId(null)} className="cancel-btn">
+          Annuler
         </button>
-        {editingId && (
-          <button type="button" onClick={() => setEditingId(null)}>
-            Annuler
-          </button>
-        )}
-      </form>
-
-      <ul className="dates-list">
-        {salons.map(salon => (
-          <li key={salon._id}>
-            <div>
-              <strong>{formatDate(salon.date)}</strong>
-              
-              <p><strong>{salon.lieu}</strong></p>
-            </div>
-            <div>
-              <button onClick={() => handleEdit(salon)}>Modifier</button>
-              <button onClick={() => handleDelete(salon._id)}>Supprimer</button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      )}
+    </form>
+  
+    <ul className="dates-list">
+      {salons.map(salon => (
+        <li key={salon._id} className="date-item">
+          <div className="date-info">
+            <strong>{formatDate(salon.date)}</strong>
+            <p><strong>{salon.lieu}</strong></p>
+          </div>
+          <div className="date-actions">
+            <button onClick={() => handleEdit(salon)} className="edit-btn">Modifier</button>
+            <button onClick={() => handleDelete(salon._id)} className="delete-btn">Supprimer</button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+  
   );
 };
 

@@ -5,106 +5,55 @@ import PhotosSkatesManager from './PhotosSkatesManager';
 import PhotosPresseManager from './PhotosPresseManager';
 import SalonsManager from './SalonsManager';
 import { useNavigate } from 'react-router-dom';
+import './DashboardAdmin.css';
 
 const DashboardAdmin = () => {
   const [tab, setTab] = useState('albums');
-  
-  
+  const navigate = useNavigate();
+
   const renderTab = () => {
     switch (tab) {
       case 'albums':
         return <AlbumsManager />;
-        case 'dates':
-          return <SalonsManager />;
-          case 'photosSalons':
-            return <PhotosSalonsManager />;
-            case 'photosSkates':
-              return <PhotosSkatesManager />;
-              case 'photosPresse':
-                return <PhotosPresseManager />;
-                default:
-                  return null;
-                }
-              };
-              
-              const navigate = useNavigate();
-              const handleLogout = () => {
-                localStorage.removeItem('token');
-                navigate('/login');
-              }
-  return (
-    <div style={styles.container}>
-      <button onClick={handleLogout} style={styles.decoBtn}>DECONNEXION</button>
-      <h1 style={styles.title}>TABLEAU DE BORD ADMINISTRATEUR</h1>
+      case 'dates':
+        return <SalonsManager />;
+      case 'photosSalons':
+        return <PhotosSalonsManager />;
+      case 'photosSkates':
+        return <PhotosSkatesManager />;
+      case 'photosPresse':
+        return <PhotosPresseManager />;
+      default:
+        return null;
+    }
+  };
 
-      <div style={styles.tabContainer}>
-        <button onClick={() => setTab('albums')} style={styles.tabBtn}>Albums</button>
-        <button onClick={() => setTab('dates')} style={styles.tabBtn}>Salons</button>
-        <button onClick={() => setTab('photosSalons')} style={styles.tabBtn}>Photos Salons</button>
-        <button onClick={() => setTab('photosSkates')} style={styles.tabBtn}>Photos Skates</button>
-        <button onClick={() => setTab('photosPresse')} style={styles.tabBtn}>Photos Presse</button>
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
+  return (
+    <div className="dashboard-container">
+      <button onClick={handleLogout} className="deco-btn">DECONNEXION</button>
+      <h1 className="dashboard-title">TABLEAU DE BORD ADMINISTRATEUR</h1>
+
+      <div className="tab-container">
+        <button onClick={() => setTab('albums')} className="tab-btn">Albums</button>
+        <button onClick={() => setTab('dates')} className="tab-btn">Salons</button>
+        <button onClick={() => setTab('photosSalons')} className="tab-btn">Photos Salons</button>
+        <button onClick={() => setTab('photosSkates')} className="tab-btn">Photos Skates</button>
+        <button onClick={() => setTab('photosPresse')} className="tab-btn">Photos Presse</button>
       </div>
 
-      <div style={styles.content}>
+      <div className="dashboard-content">
         {renderTab()}
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    padding: '20px',
-    background: 'linear-gradient(90deg, rgba(58, 122, 249, 0.94) 30%, rgba(126, 129, 157, 0.91) 67%, rgb(135, 147, 173) 100%)',
-    minHeight: '100vh'
-  },
-  title: {
-    textAlign: 'center',
-    fontFamily:'Verdana, Serif',
-    fontSize: '2rem',
-    marginBottom: '30px'
-  },
-  tabContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '10px',
-    marginBottom: '30px'
-  },
-  tabBtn: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    backgroundColor: ' rgba(244, 143, 49, 0.91)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
-    transition: 'background-color 0.3s ease',
-  },
-  decoBtn:{
-    padding: '10px 20px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    backgroundColor: ' rgba(236, 31, 4, 0.91)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
-    transition: 'background-color 0.3s ease',
-
-  },
-  content: {
-    maxWidth: '100%',
-    margin: '0 10%',
-    textAlign:'center',
-    backgroundColor: 'rgba(204, 225, 254, 0.91)',
-    padding: '20px',
-    borderRadius: '12px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)'
-  }
-};
-
 export default DashboardAdmin;
+
 
 

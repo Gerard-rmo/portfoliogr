@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosConfig from '../Services/AxiosConfig';
+import './PhotosSalonsManager.css';
 
 const PhotosSalonsManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -21,13 +22,13 @@ const PhotosSalonsManager = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!image) return;
-  
+
     const formData = new FormData();
-    formData.append("image", image); // 
-    formData.append("categorie", "salon"); //
-  
+    formData.append("image", image);
+    formData.append("categorie", "salon");
+
     try {
-      await axiosConfig.post("/photos", formData, { // 
+      await axiosConfig.post("/photos", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
@@ -47,70 +48,25 @@ const PhotosSalonsManager = () => {
   };
 
   return (
-    <div>
-      <h2>Gérer les photos des salons</h2>
-      <form onSubmit={handleUpload} style={styles.form}>
+    <div className="salons-container">
+      <h2 className="salons-title">Gérer les photos des salons</h2>
+      <form onSubmit={handleUpload} className="salons-form">
         <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
-        <button type="submit" style={styles.uploadBtn}>Ajouter</button>
+        <button type="submit" className="upload-btn">Ajouter</button>
       </form>
 
-      <div style={styles.photoGrid}>
+      <div className="photo-grid">
         {photos.map(photo => (
-          <div key={photo._id} style={styles.photoItem}>
-            <img src={photo.imageURL?.url} alt="Salon" style={styles.image} />
-            <div style={styles.buttonGroup}>
-              <button onClick={() => handleDelete(photo._id)} style={styles.deleteBtn}>Supprimer</button>
+          <div key={photo._id} className="photo-item">
+            <img src={photo.imageURL?.url} alt="Salon" className="photo-img" />
+            <div className="photo-buttons">
+              <button onClick={() => handleDelete(photo._id)} className="delete-btn">Supprimer</button>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-};
-
-const styles = {
-  form: {
-    marginBottom: '20px',
-    display: 'flex',
-    gap: '10px',
-    alignItems: 'center'
-  },
-  uploadBtn: {
-    padding: '8px 16px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer'
-  },
-  photoGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-    gap: '20px'
-  },
-  photoItem: {
-    position: 'relative'
-  },
-  image: {
-    width: '100%',
-    borderRadius: '8px'
-  },
-  buttonGroup: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '5px'
-  },
-  deleteBtn: {
-    backgroundColor: '#dc3545',
-    color: 'white',
-    border: 'none',
-    padding: '6px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer'
-  }
 };
 
 export default PhotosSalonsManager;

@@ -1,0 +1,59 @@
+.skates-container {
+  padding: 20px;
+}
+
+.skates-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Verdana", sans-serif;
+}
+
+.skates-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.upload-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.photo-item {
+  position: relative;
+}
+
+.photo-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

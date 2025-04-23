@@ -1,0 +1,81 @@
+.dashboard-container {
+  padding: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 122, 249, 0.94) 30%,
+    rgba(126, 129, 157, 0.91) 67%,
+    rgb(135, 147, 173) 100%
+  );
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-family: "Verdana", serif;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.tab-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.tab-btn,
+.deco-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.tab-btn {
+  background-color: rgba(244, 143, 49, 0.91);
+}
+
+.tab-btn:hover {
+  background-color: rgba(244, 143, 49, 1);
+}
+
+.deco-btn {
+  background-color: rgba(236, 31, 4, 0.91);
+  margin-bottom: 15px;
+}
+
+.deco-btn:hover {
+  background-color: rgba(236, 31, 4, 1);
+}
+
+.dashboard-content {
+  max-width: 100%;
+  margin: 0 10%;
+  text-align: center;
+  background-color: rgba(204, 225, 254, 0.91);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin: 0 5%;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .tab-btn,
+  .deco-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

@@ -1,0 +1,60 @@
+.salons-container {
+  padding: 20px;
+}
+
+.salons-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Verdana", sans-serif;
+}
+
+.salons-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.upload-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.photo-item {
+  position: relative;
+}
+
+.photo-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.photo-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

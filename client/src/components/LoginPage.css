@@ -1,0 +1,82 @@
+/* Full page background */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(90deg, rgba(58, 122, 249, 0.94) 30%, rgba(126, 129, 157, 0.91) 67%, rgb(135, 147, 173) 100%);
+    font-family: Arial, sans-serif;
+    position: relative;
+    padding: 20px;
+  }
+  
+  /* Centered login form */
+  .login-form-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+  }
+  
+  /* Form layout */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Input styles */
+  .input-field {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  /* Button style */
+  .submit-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: red;
+  }
+  
+  /* Footer */
+  .login-footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* ✅ Responsive rules */
+  @media (max-width: 600px) {
+    .login-form-container {
+      padding: 20px;
+    }
+  
+    .input-field, .submit-button {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .submit-button {
+      font-size: 15px;
+    }
+  }
+  
