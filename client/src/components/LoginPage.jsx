@@ -2,29 +2,44 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 const LoginPage = () => {
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3007/api/login', { password });
-      // Stocker le token dans localStorage
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('isAuth', JSON.stringify(true));
-      navigate('/admin'); // Rediriger vers le dashboard admin après connexion
+      const res = await axios.post('http://localhost:3007/api/user/login', { email, password });
+      
+      if (res.data.success) {
+        localStorage.setItem('token', res.data.token);
+        console.log('REDIRECTING NOW WITH TOKEN:', res.data.token);
+        navigate('/admin'); 
+      } else {
+        setError("Login failed: Invalid response");
+      }
     } catch (err) {
-      setError("Identifiants invalides");
+      setError(err.response?.data?.message || "Identifiants invalides");
     }
   };
+
+ 
 
   return (
     <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
       <h2>Connexion Admin</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          style={{ padding: '10px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc' }}
+        />
         <input
           type="password"
           value={password}

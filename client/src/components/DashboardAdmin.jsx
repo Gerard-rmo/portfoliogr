@@ -4,29 +4,37 @@ import PhotosSalonsManager from './PhotosSalonsManager';
 import PhotosSkatesManager from './PhotosSkatesManager';
 import PhotosPresseManager from './PhotosPresseManager';
 import SalonsManager from './SalonsManager';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardAdmin = () => {
   const [tab, setTab] = useState('albums');
-
+  
+  
   const renderTab = () => {
     switch (tab) {
       case 'albums':
         return <AlbumsManager />;
-      case 'dates':
-        return <SalonsManager />;
-      case 'photosSalons':
-        return <PhotosSalonsManager />;
-      case 'photosSkates':
-        return <PhotosSkatesManager />;
-      case 'photosPresse':
-        return <PhotosPresseManager />;
-      default:
-        return null;
-    }
-  };
-
+        case 'dates':
+          return <SalonsManager />;
+          case 'photosSalons':
+            return <PhotosSalonsManager />;
+            case 'photosSkates':
+              return <PhotosSkatesManager />;
+              case 'photosPresse':
+                return <PhotosPresseManager />;
+                default:
+                  return null;
+                }
+              };
+              
+              const navigate = useNavigate();
+              const handleLogout = () => {
+                localStorage.removeItem('token');
+                navigate('/login');
+              }
   return (
     <div style={styles.container}>
+      <button onClick={handleLogout} style={styles.decoBtn}>DECONNEXION</button>
       <h1 style={styles.title}>TABLEAU DE BORD ADMINISTRATEUR</h1>
 
       <div style={styles.tabContainer}>
@@ -73,6 +81,18 @@ const styles = {
     borderRadius: '8px',
     boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
     transition: 'background-color 0.3s ease',
+  },
+  decoBtn:{
+    padding: '10px 20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    backgroundColor: ' rgba(236, 31, 4, 0.91)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
+    transition: 'background-color 0.3s ease',
+
   },
   content: {
     maxWidth: '100%',

@@ -11,6 +11,7 @@ import Skates from './pages/Skates';
 import AlbumDetailPage from './pages/AlbumDetailPage';
 import DashboardAdmin from './components/DashboardAdmin';
 import LoginPage from './components/LoginPage';
+import PrivateRoute from './components/privateRoute';
 import './App.css';
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
           <Route path='/photos-salons' element={<PhotosSalons />} />
           <Route path='/albums/:id' element={<AlbumDetailPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/admin' element={<DashboardAdmin />} />
+          <Route path='/admin' element={<PrivateRoute><DashboardAdmin /></PrivateRoute>} />
         </Routes>
 
         <div className="contact-wrapper">

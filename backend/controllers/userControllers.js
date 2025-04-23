@@ -110,7 +110,7 @@ export const login = async (req, res, next) => {
 
     // Envoi de la réponse avec le token
     res.status(200).json({
-      succes: true,
+      success: true,
       userLogin,
       token,
     });
