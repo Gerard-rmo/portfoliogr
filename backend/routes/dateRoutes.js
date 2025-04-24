@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", registerDate);
+router.post("/create", registerDate);
 router.get("/", getAllDate);
 router.put("/:id", updateDate);
 router.delete("/:id", deleteDate);

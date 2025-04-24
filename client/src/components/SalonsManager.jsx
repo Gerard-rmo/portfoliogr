@@ -42,20 +42,19 @@ const SalonsManager = () => {
         date: new Date(formData.date).toISOString()
       };
 
-      let response;
       if (editingId) {
-        response = await axiosConfig.put(`/dates/${editingId}`, payload);
-        setSuccess('Date updated successfully');
+        await axiosConfig.put(`/dates/${editingId}`, payload);
+        setSuccess('Date mise à jour avec succès');
       } else {
-        response = await axiosConfig.post('/dates', payload);
-        setSuccess('Date added successfully');
+        await axiosConfig.post('/dates/create', payload);
+        setSuccess('Date ajoutée avec succès');
       }
       
       setFormData({ date: '', lieu: '' });
       setEditingId(null);
       fetchSalons();
     } catch (err) {
-      setError(err.response?.data?.message || 'Submission failed');
+      setError(err.response?.data?.message || 'Erreur lors de l\'envoi');
       console.error('Submit error:', err);
     }
   };
@@ -69,17 +68,19 @@ const SalonsManager = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this date?')) return;
-    
+    console.log("ID à supprimer :", id); // 🔍 utile pour debug
+  
+    if (!window.confirm('Supprimer cette date ?')) return;
     try {
       await axiosConfig.delete(`/dates/${id}`);
-      setSalons(prev => prev.filter(s => s._id !== id));
-      setSuccess('Date deleted');
+      setSalons(prev => prev.filter(salon => salon._id !== id));
+      setSuccess('Date supprimée');
     } catch (err) {
-      setError('Failed to delete');
-      console.error('Delete error:', err);
+      setError('Échec de la suppression');
+      console.error('Erreur suppression:', err);
     }
   };
+  
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {
@@ -90,57 +91,62 @@ const SalonsManager = () => {
     });
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading">Chargement...</div>;
+
+  console.log("Liste actuelle des salons :", salons);
+
 
   return (
     <div className="salons-manager">
-    <h2 className="salons-title">GESTION DES DATES DE SALONS</h2>
-    
-    {error && <div className="error-message">{error}</div>}
-    {success && <div className="success-message">{success}</div>}
-  
-    <form onSubmit={handleSubmit} className="salons-form">
-      <input
-        type="date"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="lieu"
-        placeholder="Lieu"
-        value={formData.lieu}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit" className="submit-btn">
-        {editingId ? 'Mettre à jour' : 'Ajouter'} date de salon
-      </button>
-      {editingId && (
-        <button type="button" onClick={() => setEditingId(null)} className="cancel-btn">
-          Annuler
+      <h2 className="salons-title">GESTION DES DATES DE SALONS</h2>
+
+      {error && <div className="error-message">{error}</div>}
+      {success && <div className="success-message">{success}</div>}
+
+      <form onSubmit={handleSubmit} className="salons-form">
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="lieu"
+          placeholder="Lieu"
+          value={formData.lieu}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit" className="submit-btn">
+          {editingId ? 'Mettre à jour' : 'Ajouter'} date de salon
         </button>
-      )}
-    </form>
-  
-    <ul className="dates-list">
-      {salons.map(salon => (
-        <li key={salon._id} className="date-item">
-          <div className="date-info">
-            <strong>{formatDate(salon.date)}</strong>
-            <p><strong>{salon.lieu}</strong></p>
-          </div>
-          <div className="date-actions">
-            <button onClick={() => handleEdit(salon)} className="edit-btn">Modifier</button>
-            <button onClick={() => handleDelete(salon._id)} className="delete-btn">Supprimer</button>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
-  
+        {editingId && (
+          <button type="button" onClick={() => setEditingId(null)} className="cancel-btn">
+            Annuler
+          </button>
+        )}
+      </form>
+
+      <ul className="dates-list">
+  {salons.map((salon) => (
+    <li key={salon._id} className="date-item">
+      <div className="date-content">
+        <div className="date-info">
+          <strong>{formatDate(salon.date)}</strong>
+          <p>{salon.lieu}</p>
+        </div>
+        <div className="date-actions">
+          <button onClick={() => handleEdit(salon)} className="edit-btn">Modifier</button>
+          <button onClick={() => handleDelete(salon._id)} className="delete-btn-salons">Supprimer</button>
+        </div>
+      </div>
+    </li>
+  ))}
+</ul>
+
+    </div>
   );
 };
 
