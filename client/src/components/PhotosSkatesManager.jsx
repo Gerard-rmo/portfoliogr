@@ -15,7 +15,7 @@ const PhotosSkatesManager = () => {
   const fetchPhotos = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("https://leglaiveproduction.onrender.com/api/photos?categorie=skate");
+      const res = await axios.get("https://leglaiveproduction-1.onrender.com/api/photos?categorie=skate");
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error('Erreur chargement:', err);
@@ -34,7 +34,7 @@ const PhotosSkatesManager = () => {
     formData.append("categorie", "skate");
 
     try {
-      await axios.post("https://leglaiveproduction.onrender.com/api/photos", formData, {
+      await axios.post("https://leglaiveproduction-1.onrender.com/api/photos", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
@@ -50,7 +50,7 @@ const PhotosSkatesManager = () => {
 
     try {
       setLoading(true);
-      await axios.delete(`https://leglaiveproduction.onrender.com/api/photos/${id}`);
+      await axios.delete(`https://leglaiveproduction-1.onrender.com/api/photos/${id}`);
       fetchPhotos();
     } catch (err) {
       console.error('Erreur suppression:', err);

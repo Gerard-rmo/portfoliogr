@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3007/api/albums",
+  baseURL: "https://leglaiveproduction-1.onrender.com/api/albums",
 });
 
 //Obtenir un album par rapport à son id

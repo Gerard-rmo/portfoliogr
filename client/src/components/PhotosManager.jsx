@@ -11,7 +11,7 @@ const PhotosManager = () => {
 
   const fetchPhotos = async () => {
     try {
-      const res = await axios.get('https://leglaiveproduction.onrender.com/api/photos');
+      const res = await axios.get('https://leglaiveproduction-1.onrender.com/api/photos');
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error('Erreur récupération photos:', err);
@@ -24,7 +24,7 @@ const PhotosManager = () => {
     if (image) formData.append('imageURL', image); // Change image to imageURL
 
     try {
-      await axios.post('https://leglaiveproduction.onrender.com/api/photos', formData);
+      await axios.post('https://leglaiveproduction-1.onrender.com/api/photos', formData);
       setImage(null);
       fetchPhotos();
     } catch (err) {
@@ -33,7 +33,7 @@ const PhotosManager = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://leglaiveproduction.onrender.com/api/photos/${id}`);
+    await axios.delete(`https://leglaiveproduction-1.onrender.com/api/photos/${id}`);
     fetchPhotos();
   };
 

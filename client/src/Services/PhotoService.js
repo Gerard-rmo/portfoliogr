@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3007/api/photos",
+  baseURL: "https://leglaiveproduction-1.onrender.com/api/photos",
 });
 
 // Obtenir une photo par rapport à son ID

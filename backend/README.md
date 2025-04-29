@@ -4,7 +4,7 @@ Ce dossier contient le backend de l'application de gestion de bande dessinée. I
 
 ## Déploiement
 
-Le projet est déployé sur Render : [Voir le site](https://leglaiveproduction.onrender.com)
+Le projet est déployé sur Render : [Voir le site](https://leglaiveproduction-1.onrender.com)
 
 ## Prérequis
 
