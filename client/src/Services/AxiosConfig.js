@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosConfig = axios.create({
-  baseURL: "http://localhost:3007/api",
+  baseURL: "https://leglaiveproduction.onrender.com/api",
   withCredentials: true, // Pour envoyer les cookies lors des requêtes
   headers: {
     "Content-Type": "application/json",

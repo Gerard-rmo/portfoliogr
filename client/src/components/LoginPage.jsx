@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3007/api/user/login', { email, password });
+      const res = await axios.post('https://leglaiveproduction.onrender.com/api/user/login', { email, password });
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         console.log('REDIRECTING NOW WITH TOKEN:', res.data.token);

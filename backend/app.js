@@ -26,6 +26,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "https://leglaiveproduction.surge.sh",
       "https://res.cloudinary.com" // For Cloudinary
     ],
     credentials: true,

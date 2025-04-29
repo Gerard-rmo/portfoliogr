@@ -18,7 +18,7 @@ const AlbumsManager = () => {
 
   const fetchAlbums = async () => {
     try {
-      const response = await axios.get("http://localhost:3007/api/albums");
+      const response = await axios.get("https://leglaiveproduction.onrender.com/api/albums");
       if (response.data && response.data.allAlbum) {
         setAlbums(response.data.allAlbum);
       } else {
@@ -50,7 +50,7 @@ const AlbumsManager = () => {
     }
 
     try {
-      await axios.post("http://localhost:3007/api/albums/create", formData, {
+      await axios.post("https://leglaiveproduction.onrender.com/api/albums/create", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       setNewAlbum({ title: "", summary: "", image: null });
@@ -71,7 +71,7 @@ const AlbumsManager = () => {
     
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:3007/api/albums/${id}`);
+      await axios.delete(`https://leglaiveproduction.onrender.com/api/albums/${id}`);
       // Actualiser la liste après suppression
       fetchAlbums();
     } catch (error) {
