@@ -1,13 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosConfig = axios.create({
-    baseURL: import.meta.env.VITE_APP_API_URL,
-    withCredentials: true, // Pour envoyer les cookies lors des requêtes
-    headers: {
-        'Content-Type': 'application/json', 
-        'X-Requested-With': 'XMLHttpRequest' //protection contre les attaques CSRF    
-    }
+  baseURL: "http://localhost:3007/api",
+  withCredentials: true, // Pour envoyer les cookies lors des requêtes
+  headers: {
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest", //protection contre les attaques CSRF
+  },
 });
 
 export default axiosConfig;
-

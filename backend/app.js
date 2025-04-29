@@ -26,7 +26,6 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://680a3478d064e71ceac711ad--leglaiveproduction.netlify.app/",
       "https://res.cloudinary.com" // For Cloudinary
     ],
     credentials: true,

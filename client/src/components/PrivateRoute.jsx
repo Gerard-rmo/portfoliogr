@@ -1,16 +1,16 @@
 import { Navigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Install with: npm install jwt-decode
+import { jwtDecode } from 'jwt-decode'; 
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem('token');
   
-  // Check if token exists and isn't expired
+  
   const isAuthenticated = () => {
     if (!token) return false;
     
     try {
       const decoded = jwtDecode(token);
-      return decoded.exp * 1000 > Date.now(); // Check expiration
+      return decoded.exp * 1000 > Date.now(); 
     } catch {
       return false;
     }
