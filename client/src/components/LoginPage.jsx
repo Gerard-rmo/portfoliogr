@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosConfig from '../Services/AxiosConfig';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://leglaiveproduction-1.onrender.com/api/user/login', { email, password });
+      const res = await axiosConfig.post('/user/login', { email, password });
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         console.log('REDIRECTING NOW WITH TOKEN:', res.data.token);

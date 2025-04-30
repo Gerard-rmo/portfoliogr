@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosConfig from "../Services/AxiosConfig";
 import "./AlbumsManager.css";
 
 const AlbumsManager = () => {
@@ -18,7 +18,7 @@ const AlbumsManager = () => {
 
   const fetchAlbums = async () => {
     try {
-      const response = await axios.get("https://leglaiveproduction-1.onrender.com/api/albums");
+      const response = await axiosConfig.get("/albums");
       if (response.data && response.data.allAlbum) {
         setAlbums(response.data.allAlbum);
       } else {
@@ -50,7 +50,7 @@ const AlbumsManager = () => {
     }
 
     try {
-      await axios.post("https://leglaiveproduction-1.onrender.com/api/albums/create", formData, {
+      await axiosConfig.post("/albums/create", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       setNewAlbum({ title: "", summary: "", image: null });
@@ -71,7 +71,7 @@ const AlbumsManager = () => {
     
     try {
       setLoading(true);
-      await axios.delete(`https://leglaiveproduction-1.onrender.com/api/albums/${id}`);
+      await axiosConfig.delete(`/albums/${id}`);
       // Actualiser la liste après suppression
       fetchAlbums();
     } catch (error) {

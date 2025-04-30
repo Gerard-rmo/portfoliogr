@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosConfig = axios.create({
-  baseURL: "https://leglaiveproduction-1.onrender.com",
+  baseURL: import.meta.env.VITE_REACT_APP_API_URL,
   withCredentials: true, // Pour envoyer les cookies lors des requêtes
   headers: {
     "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosConfig from '../Services/AxiosConfig';
 
 const PhotosManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -11,7 +11,7 @@ const PhotosManager = () => {
 
   const fetchPhotos = async () => {
     try {
-      const res = await axios.get('https://leglaiveproduction-1.onrender.com/api/photos');
+      const res = await axiosConfig.get('/photos');
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error('Erreur récupération photos:', err);
@@ -24,7 +24,7 @@ const PhotosManager = () => {
     if (image) formData.append('imageURL', image); // Change image to imageURL
 
     try {
-      await axios.post('https://leglaiveproduction-1.onrender.com/api/photos', formData);
+      await axiosConfig.post('/photos', formData);
       setImage(null);
       fetchPhotos();
     } catch (err) {
@@ -33,7 +33,7 @@ const PhotosManager = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://leglaiveproduction-1.onrender.com/api/photos/${id}`);
+    await axiosConfig.delete(`/photos/${id}`);
     fetchPhotos();
   };
 

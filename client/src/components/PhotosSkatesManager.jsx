@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosConfig from '../Services/AxiosConfig';
 import './PhotosSkatesManager.css';
 
 const PhotosSkatesManager = () => {
@@ -15,7 +15,7 @@ const PhotosSkatesManager = () => {
   const fetchPhotos = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("https://leglaiveproduction-1.onrender.com/api/photos?categorie=skate");
+      const res = await axiosConfig.get("/photos?categorie=skate");
       setPhotos(Array.isArray(res.data) ? res.data : res.data.photos || []);
     } catch (err) {
       console.error('Erreur chargement:', err);
@@ -34,7 +34,7 @@ const PhotosSkatesManager = () => {
     formData.append("categorie", "skate");
 
     try {
-      await axios.post("https://leglaiveproduction-1.onrender.com/api/photos", formData, {
+      await axiosConfig.post("/photos", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImage(null);
@@ -50,7 +50,7 @@ const PhotosSkatesManager = () => {
 
     try {
       setLoading(true);
-      await axios.delete(`https://leglaiveproduction-1.onrender.com/api/photos/${id}`);
+      await axiosConfig.delete(`VITE_REACT_APP_API_URL/photos/${id}`);
       fetchPhotos();
     } catch (err) {
       console.error('Erreur suppression:', err);

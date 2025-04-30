@@ -1,14 +1,8 @@
-import axios from "axios";
-
-const REACT_APP_API_URL = import.meta.env.VITE_REACT_APP_API_URL; // Assure-toi que ta variable commence bien par VITE_
-
-const api = axios.create({
-  baseURL: `${REACT_APP_API_URL}/api/dates`,
-});
+import axiosConfig from "./AxiosConfig";
 
 // Obtenir une date par son ID
 export const getDateById = async (id) => {
-  const response = await api.get(`/${id}`);
+  const response = await axiosConfig.get(`/${id}`);
   return response.data;
 };
 
@@ -18,7 +12,7 @@ export const registerDate = async (dateData) => {
   formData.append("lieu", dateData.lieu);
   formData.append("date", dateData.date);
 
-  const response = await api.post("/", formData, {
+  const response = await axiosConfig.post("/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -29,12 +23,12 @@ export const registerDate = async (dateData) => {
 
 // Mettre à jour une date
 export const updateDate = async (id, updatedData) => {
-  const response = await api.put(`/${id}`, updatedData);
+  const response = await axiosConfig.put(`/${id}`, updatedData);
   return response.data;
 };
 
 // Supprimer une date
 export const deleteDate = async (id) => {
-  const response = await api.delete(`/${id}`);
+  const response = await axiosConfig.delete(`/${id}`);
   return response.data;
 };

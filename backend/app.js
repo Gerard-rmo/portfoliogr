@@ -26,8 +26,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://leglaiveproduction.surge.sh",
-      "https://res.cloudinary.com" // For Cloudinary
+      "https://res.cloudinary.com", // For Cloudinary
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -41,17 +40,17 @@ app.use(helmet());
 // à l'API afin de prévenir les abus
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 500, 
+  max: 500,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
     status: 429,
-    message: "Trop de requêtes, veuillez réessayer plus tard"
+    message: "Trop de requêtes, veuillez réessayer plus tard",
   },
   skip: (req) => {
     // Skip rate limiting for local development
-    return process.env.NODE_ENV === 'development';
-  }
+    return process.env.NODE_ENV === "development";
+  },
 });
 
 // Application du middleware de limitation de taux à toutes les requêtes vers l'API

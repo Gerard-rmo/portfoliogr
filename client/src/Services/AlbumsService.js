@@ -1,20 +1,16 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "https://leglaiveproduction-1.onrender.com/api/albums",
-});
+import axiosConfig from "./AxiosConfig";
 
 //Obtenir un album par rapport à son id
 
 export const getAlbum = async (id) => {
-  const response = await api.get(`/${id}`);
+  const response = await axiosConfig.get(`/${id}`);
   return response.data;
 };
 
 //Obtenir tous les albums.
 
 export const getAllAlbums = async () => {
-  const response = await api.get(`/`);
+  const response = await axiosConfig.get(`/`);
   return response.data;
 };
 
@@ -28,7 +24,7 @@ export const createAlbum = async (albumData) => {
   if (albumData.image) {
     formData.append("image", albumData.image);
   }
-  const response = await api.post(`/register`, formData);
+  const response = await axiosConfig.post(`/register`, formData);
   return response.data;
 };
 
@@ -43,12 +39,12 @@ export const updateAlbum = async (id, albumData) => {
     formData.append("image", albumData.image);
   }
 
-  const response = await api.put(`/${id}`, formData);
+  const response = await axiosConfig.put(`/${id}`, formData);
   return response.data;
 };
 
 //supprimer un album.
 export const deleteAlbum = async (id) => {
-  const response = await api.delete(`/${id}`);
+  const response = await axiosConfig.delete(`/${id}`);
   return response.data;
 };

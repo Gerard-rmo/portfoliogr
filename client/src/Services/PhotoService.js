@@ -1,13 +1,9 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "https://leglaiveproduction-1.onrender.com/api/photos",
-});
+import axiosConfig from "./AxiosConfig";
 
 // Obtenir une photo par rapport à son ID
 export const getPhoto = async (id) => {
   try {
-    const response = await api.get(`/${id}`);
+    const response = await axiosConfig.get(`/${id}`);
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la récupération de la photo :", error);
@@ -17,7 +13,7 @@ export const getPhoto = async (id) => {
 
 // Obtenir toutes les photos
 export const getAllPhotos = async () => {
-  const response = await api.get("");
+  const response = await axiosConfig.get("");
   return response.data;
 };
 
@@ -29,7 +25,7 @@ export const createPhoto = async (photoData) => {
     formData.append("image", photoData.image);
   }
 
-  const response = await api.post("/create", formData, {
+  const response = await axiosConfig.post("/create", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -52,7 +48,7 @@ export const updatePhoto = async (id, updatedData) => {
     formData.append("description", updatedData.description);
   }
 
-  const response = await api.put(`/${id}`, formData, {
+  const response = await axiosConfig.put(`/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -63,6 +59,6 @@ export const updatePhoto = async (id, updatedData) => {
 
 // Supprimer une photo
 export const deletePhoto = async (id) => {
-  const response = await api.delete(`/${id}`);
+  const response = await axiosConfig.delete(`/${id}`);
   return response.data;
 };
