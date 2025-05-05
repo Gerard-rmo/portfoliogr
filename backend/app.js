@@ -1,24 +1,22 @@
-import express from "express"; // Importation d'express pour créer un serveur web
-import dotenv from "dotenv"; // Importation de dotenv pour la gestion des variables d'environnement
-import connectDB from "./config/db.js"; // Importation de la fonction de connexion à la base de données
+import express from "express"; //création d'un serveur web
+import dotenv from "dotenv"; //  gestion des variables d'environnement
+import connectDB from "./config/db.js"; // connexion à la base de données
 import cloudinaryConfig from "./config/cloudinary.js";
-import userRoutes from "./routes/userRoutes.js"; // Importation des routes utilisateur
-import albumRoutes from "./routes/albumRoutes.js"; // Importation des routes des albums BD.
-import dateRoutes from "./routes/dateRoutes.js"; // Importation des routes des dates des salons.
-import photoRoutes from "./routes/photoRoutes.js"; // Importation des routes photos des salons.
-import errorHandler from "./middleware/errorHandler.js"; // Importation du gestionnaire d'erreurs.
-import helmet from "helmet"; // Importation de helmet pour la sécurité de l'application
-import cookieParser from "cookie-parser"; // Importation de cookie-parser pour analyser les cookies
-import cors from "cors"; // Importation de cors pour gérer les requêtes cross-origin
-import rateLimit from "express-rate-limit"; // Importation de express-rate-limit pour limiter les requêtes
+import userRoutes from "./routes/userRoutes.js";
+import albumRoutes from "./routes/albumRoutes.js";
+import dateRoutes from "./routes/dateRoutes.js";
+import photoRoutes from "./routes/photoRoutes.js";
+import errorHandler from "./middleware/errorHandler.js"; // gestionnaire d'erreurs.
+import helmet from "helmet"; //  la sécurité de l'application
+import cookieParser from "cookie-parser"; // cookie-parser pour analyser les cookies
+import cors from "cors"; // gérer les requêtes cross-origin
+import rateLimit from "express-rate-limit"; // limitation des requêtes.
 
 dotenv.config(); // Chargement des variables d'environnement à partir d'un fichier .env
 const app = express(); // Création d'une instance de l'application Express
 
-// Connexion à la base de données
 connectDB();
 
-// Configuration Cloudinary
 cloudinaryConfig();
 
 // Middleware pour gérer les requêtes cross-origin

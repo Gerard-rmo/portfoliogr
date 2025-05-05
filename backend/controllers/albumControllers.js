@@ -32,7 +32,7 @@ export const createAlbum = async (req, res, next) => {
 
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "visuels", // Spécifie le dossier sur Cloudinary
-      resource_type: "image", // Type de fichier à uploader
+      resource_type: "image", // Type de fichier 
     });
     console.log(result);
     // Supprimer le fichier local après le téléchargement
@@ -133,7 +133,7 @@ export const getAlbumById = async (req, res, next) => {
   try {
     const album = await Album.findById(req.params.id);
     if (!album) {
-      return res.status(404).json({ message: "Album non trouvé" });
+      return res.status(404).json({ message: "Album non trouvé." });
     }
     res.status(200).json(album);
   } catch (error) {

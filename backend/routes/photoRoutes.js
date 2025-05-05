@@ -9,10 +9,12 @@ import {
 
 const router = express.Router();
 
-// Updated routes
-router.post("/", upload.single("image"), createPhoto); 
+router.post("/", upload.single("image"), createPhoto);
+
 router.get("/", getAllPhotos);
+
 router.put("/:id", upload.single("image"), updatePhoto);
+
 router.delete("/:id", deletePhoto);
 
 export default router;

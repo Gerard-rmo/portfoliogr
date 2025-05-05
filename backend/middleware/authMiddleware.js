@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import JWT from "jsonwebtoken"; // On importe la bibliothèque `jsonwebtoken` pour travailler avec les JWT.
+import JWT from "jsonwebtoken"; // bibliothèque `jsonwebtoken` pour travailler avec les JWT.
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const protect = async (req, res, next) => {

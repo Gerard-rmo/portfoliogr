@@ -50,8 +50,6 @@ export const updateUser = async (req, res, next) => {
     const { name, email, password } = req.body;
     let updateData = { name, email };
 
-    // If password is being updated, hash it first
-
     const user = await User.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
       runValidators: true,

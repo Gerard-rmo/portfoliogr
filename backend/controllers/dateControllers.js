@@ -9,7 +9,7 @@ export const registerDate = async (req, res, next) => {
     if (!date || !lieu) {
       return res.status(400).json({ 
         success: false,
-        message: 'Date et lieu necessaires' 
+        message: 'Date et lieu necessaires.' 
       });
     }
 
@@ -26,7 +26,7 @@ export const registerDate = async (req, res, next) => {
     console.error('Creation error:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: 'Erreur du serveur.'
     });
   }
 };

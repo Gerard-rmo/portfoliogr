@@ -6,8 +6,6 @@ import logger from "../config/logger.js";
 
 // Configuration du middleware morgan pour loguer les requêtes HTTP.
 const morganMiddleware = morgan("combined", {
-  // Le paramètre "combined" utilise un format de log standard, très détaillé pour les requêtes HTTP.
-  // Exemple : "127.0.0.1 - - [12/Apr/2023:14:31:56 +0000] \"GET / HTTP/1.1\" 200 612"
   stream: {
     // On redéfinit la méthode "write" du stream pour envoyer les logs générés par morgan à notre logger personnalisé.
     write: (message) => {
