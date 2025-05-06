@@ -1,25 +1,24 @@
 .contact-wrapper {
-    position: fixed;
-    top: 55px;
-    right: 20px;
-    z-index: 1000;
-  }
-  
-  .floating-contact {
-    display: inline-block;
-    background-color: #ef2a02;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 50px;
-    box-shadow: 0 4px 12px rgba(78, 38, 210, 0.408);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .floating-contact:hover {
-    background-color: #00b303;
-    transform: translateY(-2px);
-  }
-  
+  position: fixed;
+  top: 55px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.floating-contact {
+  display: inline-block;
+  background-color: #ef2a02;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(78, 38, 210, 0.408);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.floating-contact:hover {
+  background-color: #00b303;
+  transform: translateY(-2px);
+}

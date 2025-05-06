@@ -31,11 +31,16 @@
   padding: 3px 10px;
   background-color: rgb(4, 2, 105);
   color: yellow;
+  border: solid 2px rgb(108, 140, 182);
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0px 0px 20px rgba(21, 13, 63, 0.93);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out;
+  cursor: pointer;
+
 }
 .navLink:hover {
   color: yellow;
 }
+
