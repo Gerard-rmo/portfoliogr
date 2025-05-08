@@ -32,6 +32,7 @@
 .logo {
   width: 280px;
   height: auto;
+  margin-top: 50px;
   margin-bottom: 5px;
   box-shadow: 15px 15px 50px rgb(226, 99, 20);
 }
