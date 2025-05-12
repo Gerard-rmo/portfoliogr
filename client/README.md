@@ -3,7 +3,6 @@
 Ce dossier contient la partie **frontend** de l'application de gestion de bande dessinée. Il est développé avec **React** et utilise **Vite** pour un bundling rapide et moderne.
 
 Accès à l'application via http://localhost:5173.
-l'application est déployée sur :https://leglaiveproduction.vercel.app
 
 ## 📁 Structure globale du projet
 
