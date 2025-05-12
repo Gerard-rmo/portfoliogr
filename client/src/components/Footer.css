@@ -1,5 +1,5 @@
 .footer {
-  background-color: rgb(28, 91, 143);
+ background-image: linear-gradient(to right, #0c4574, #7ab7e8);/* Dégradé horizontal */
   padding: 13px;
   display: flex;
   justify-content: space-evenly;

@@ -1,6 +1,7 @@
 /* --- Structure fixe --- */
+/* --- Structure fixe --- */
 .nav {
-  background-color: rgb(28, 91, 143);
+  background-image: linear-gradient(to right, #0c4574, #73b5ea);/* Dégradé horizontal */
   padding: 13px;
   position: fixed;
   top: 0;
@@ -9,6 +10,7 @@
   z-index: 999;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
 
 .navContainer {
   display: flex;
@@ -33,7 +35,7 @@
 
 .navLink {
   color: white;
-  margin:0 49px;
+  margin: 0 49px;
   text-decoration: none;
   font-size: 15px;
   transition: transform 0.2s ease-in-out;
@@ -45,7 +47,7 @@
 
 .btnLink {
   padding: 3px 10px;
-  margin-left: 60px;
+  margin-left: 45px;
   background-color: rgb(4, 2, 105);
   color: yellow;
   border: solid 2px rgb(108, 140, 182);
@@ -61,6 +63,7 @@
 .navLink:hover {
   color: yellow;
 }
+
 .modeToggle {
   background: none;
   border: none;
@@ -69,6 +72,7 @@
   color: white;
   transition: transform 0.2s ease;
 }
+
 .modeToggle:hover {
   transform: scale(1.2);
 }
@@ -116,18 +120,20 @@
   }
 
   .navList {
-    position: absolute;
-    top: 58px;
-    left: 0;
-    right: 0;
-    background-color: rgb(28, 91, 143);
-    flex-direction: column;
-    align-items:start;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
+  position: absolute;
+  top: 58px;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(to right, #0c4574, #90bee3); /* Gradient ajouté */
+  background-color: transparent; /* pour éviter tout conflit */
+  flex-direction: column;
+  align-items: start;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 
   .navList.open {
     max-height: 300px;
@@ -139,4 +145,3 @@
     margin: 12px 0;
   }
 }
-
