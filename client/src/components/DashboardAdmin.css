@@ -38,6 +38,7 @@
 
 .tab-btn {
   background-color: rgba(244, 143, 49, 0.91);
+  border: solid 2px rgb(252, 252, 248);
 }
 
 .tab-btn:hover {
@@ -45,12 +46,14 @@
 }
 
 .deco-btn {
+  border: solid 2px yellow;
   background-color: rgba(236, 31, 4, 0.91);
+  margin-top: 50px;
   margin-bottom: 15px;
 }
 
 .deco-btn:hover {
-  background-color: rgba(236, 31, 4, 1);
+  background-color: rgb(17, 166, 17);
 }
 
 .dashboard-content {
