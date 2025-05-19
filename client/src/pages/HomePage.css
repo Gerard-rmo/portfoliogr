@@ -5,12 +5,12 @@
   margin: 0 auto;
   position: relative;
   min-height: 100vh;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cstyle%3E text %7B font-family: 'Bangers', sans-serif; font-weight: bold; fill: rgba(0,0,0,0.1); %7D %3C/style%3E%3Cg%3E%3Ccircle cx='50' cy='50' r='40' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='200' cy='70' r='25' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='20' y='100' font-size='30'%3EBAM!%3C/text%3E%3Ctext x='120' y='170' font-size='35'%3EPOW!%3C/text%3E%3Ctext x='60' y='50' font-size='20'%3EWHAM!%3C/text%3E%3Ccircle cx='80' cy='230' r='15' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='220' cy='220' r='10' fill='rgba(255,255,255,0.1)'/%3E%3Ctext x='140' y='240' font-size='18'%3EWOW!%3C/text%3E%3C/g%3E%3C/svg%3E"),
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cstyle%3E text %7B font-family: monospace; font-weight: bold; fill: rgba(0,0,0,0.06); %7D %3C/style%3E%3Cg%3E%3Ctext x='10' y='50' font-size='24'%3Econsole.log()%3C/text%3E%3Ctext x='150' y='100' font-size='20'%3Efunction()%3C/text%3E%3Ctext x='60' y='150' font-size='30'%3E&lt;div&gt;%3C/text%3E%3Ctext x='120' y='200' font-size='22'%3Ereturn true;%3C/text%3E%3Ctext x='20' y='250' font-size='18'%3Enpm start%3C/text%3E%3C/g%3E%3C/svg%3E"),
     linear-gradient(
       90deg,
-      rgba(249, 198, 58, 0.94) 30%,
-      rgba(254, 250, 123, 0.91) 67%,
-      rgb(253, 255, 161) 100%
+      rgba(195, 197, 195, 0.94) 30%,
+      rgba(170, 173, 170, 0.91) 67%,
+      rgb(125, 127, 125) 100%
     );
   background-repeat: repeat, no-repeat;
   background-size: 450px 350px, cover;
@@ -25,7 +25,7 @@
   width: 100%;
   height: 100%;
   background-image: url("https://www.transparenttextures.com/patterns/sketchy.png");
-  opacity: 3.5;
+  opacity: 0.5;
   z-index: 0;
   pointer-events: none;
 }
@@ -41,27 +41,47 @@
 }
 
 .responsive-logo {
-  width: 400px;
-  max-width: 400px;
+  width: 100px;
+  max-width: 100px;
   height: auto;
   margin-bottom: 5px;
   box-shadow: 15px 15px 50px rgb(226, 99, 20);
 }
 
+/* ✅ TAILLE CORRIGÉE */
 .responsive-logo2 {
+  border-radius: 10%;
+  width: 350px;
+  max-width: 100%;
+  border: solid 4px rgb(22, 200, 52);
+  height: auto;
   box-shadow: 20px 10px 2px rgba(29, 18, 4, 0.326);
+  margin-bottom: 10px;
+  margin-left: 5%;
 }
 
 .home-description {
   font-family: "Verdana", serif;
   font-size: 20px;
   font-weight: bold;
-  color: rgb(4, 58, 102);
+  color: rgb(33, 33, 33);
   line-height: 1.6;
   margin: 20px auto;
   padding: 10px;
   max-width: 800px;
-  text-shadow: 1px 10px 5px rgb(226, 99, 20);
+  /* text-shadow: 1px 30px 10px rgb(22, 200, 52); */
+}
+.home-description1 {
+  font-family: "Verdana", serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: rgb(33, 33, 33);
+  line-height: 1.6;
+  margin-top: 0px;
+  margin: 20px auto;
+  padding: 10px;
+  max-width: 800px;
+  text-shadow: 1px 30px 10px rgb(22, 200, 52);
 }
 
 .carousel-frise {
@@ -89,17 +109,17 @@
   border-radius: 10px;
 }
 
-/* Animation continue */
-@keyframes scrollFrise {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-150%);
-  }
+/* ✅ NOUVEAU WRAP CONTENEUR POUR IMAGE + TEXTE */
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 40px auto;
 }
 
-/* Responsive */
+/* ✅ RESPONSIVE */
 @media (max-width: 768px) {
   .carousel-frise {
     height: 40vh;
@@ -108,14 +128,29 @@
   .carousel-item-frise img {
     height: 40vh;
   }
+
   .home-description {
-    font-size: 14px;
+    font-size: 24px;
     padding: 8px;
+    text-align: center;
   }
+
   .home-container {
     background-size: 250px 150px, cover;
   }
+
+  .responsive-logo2 {
+    width: 220px;
+     display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+  .flex-container {
+    flex-direction: column;
+  }
 }
+
 @media (max-width: 480px) {
   .carousel-frise {
     height: 30vh;
@@ -124,19 +159,4 @@
   .carousel-item-frise img {
     height: 30vh;
   }
-}
-
-.responsive-logo {
-  width: 80vw;
-  max-width: 600px;
-  height: auto;
-  margin-bottom: 10px;
-  margin-top: 60px;
-}
-
-.responsive-logo2 {
-  width: 90vw;
-  max-width: 900px;
-  height: auto;
-  margin-bottom: 10px;
 }

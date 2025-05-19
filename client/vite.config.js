@@ -6,6 +6,9 @@ export default defineConfig({
   assetsInclude: ["**/*.PNG", "**/*.png"],
   base: "./",
   build: {
-    outDir: 'dist'
+    outDir: "dist",
+  },
+  server: {
+    port: 5170, // <-- Ici tu changes le port
   },
 });

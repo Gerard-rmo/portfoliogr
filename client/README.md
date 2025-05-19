@@ -1,8 +1,8 @@
-# Frontend - Application Bande Dessinée
+# Frontend - portfolio
 
-Ce dossier contient la partie **frontend** de l'application de gestion de bande dessinée. Il est développé avec **React** et utilise **Vite** pour un bundling rapide et moderne.
+Ce dossier contient la partie **frontend** de l'application de portfolio. Il est développé avec **React** et utilise **Vite** pour un bundling rapide et moderne.
 
-Accès à l'application via http://localhost:5173.
+Accès à l'application via http://localhost:5170.
 
 ## 📁 Structure globale du projet
 
@@ -58,7 +58,7 @@ Créer un fichier .env à la racine avec :
 
 env
 Copier le code
-VITE_API_URL=http://localhost:3007/api
+VITE_API_URL=http://localhost:3005/api
 Lancer le serveur de développement :
 
 bash

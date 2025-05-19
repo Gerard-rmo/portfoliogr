@@ -23,7 +23,7 @@ cloudinaryConfig();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
+      "http://localhost:5170",
       "https://res.cloudinary.com", // For Cloudinary
     ],
     credentials: true,
@@ -76,7 +76,7 @@ app.use("/api/photos", photoRoutes); // Routes des photos des salons
 app.use(errorHandler);
 
 // Récupération du port à partir des variables d'environnement ou 3007 par défaut
-const PORT = process.env.PORT || 3007;
+const PORT = process.env.PORT || 3005;
 
 // Démarrer le serveur avec un message de confirmation
 app.listen(PORT, () => {

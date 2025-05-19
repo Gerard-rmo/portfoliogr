@@ -1,5 +1,5 @@
 .footer {
- background-image: linear-gradient(to right, #0c4574, #7ab7e8);/* Dégradé horizontal */
+  background-image: linear-gradient(to right, #131314, #afb0b1);
   padding: 13px;
   display: flex;
   justify-content: space-evenly;
@@ -22,7 +22,7 @@
 }
 
 .nav-link {
-  color: white;
+  color: rgb(22, 200, 52);
   text-decoration: none;
   font-size: 15px;
   margin: 0 30px;

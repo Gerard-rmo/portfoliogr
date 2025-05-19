@@ -1,11 +1,12 @@
 # leglaiveproduction
+
 # leglaiveproduction
 
 # Frontend - Application Bande Dessinée
 
 Ce dossier contient la partie **frontend** de l'application de gestion de bande dessinée. Il est développé avec **React** et utilise **Vite** pour un bundling rapide et moderne.
 
-Accès à l'application via http://localhost:5173.
+Accès à l'application via http://localhost:5170.
 
 ## 📁 Structure globale du projet
 
@@ -61,13 +62,14 @@ Créer un fichier .env à la racine avec :
 
 env
 Copier le code
-VITE_API_URL=http://localhost:3007/api
+VITE_API_URL=http://localhost:3005/api
 Lancer le serveur de développement :
 
 bash
 Copier le code
 npm run dev
 ```
+
 # Backend - Application Bande Dessinée
 
 Ce dossier contient le backend de l'application de gestion de bande dessinée. Il est développé avec **Node.js**, **Express**, et **MongoDB**, et utilise **Cloudinary** pour la gestion des images.
@@ -154,7 +156,7 @@ backend/
 2. Créer un fichier `.env` à la racine avec les variables nécessaires :
 
 ```env
-PORT=3007
+PORT=3005
 MONGODB_URI=mongodb://localhost:27017/nomDeTaDB
 CLOUDINARY_CLOUD_NAME=xxx
 CLOUDINARY_API_KEY=xxx
@@ -174,7 +176,7 @@ npm install
 npm start
 ```
 
-Le serveur sera disponible sur `http://localhost:3007`.
+Le serveur sera disponible sur `http://localhost:3005`.
 
 ## API - Routes principales
 
@@ -224,5 +226,3 @@ Les tests peuvent être ajoutés avec Jest ou Supertest (non inclus pour l’ins
 Ce dossier contient toutes les dépendances installées. Il est automatiquement généré avec `npm install` et n'est pas versionné dans Git.
 
 Ce site est conforme au RGPD (UE 2016/679). [Texte officiel](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32016R0679).
-
-

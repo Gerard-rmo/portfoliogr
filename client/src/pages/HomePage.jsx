@@ -19,15 +19,32 @@ const slides = [slide1, slide2, slide3, slide4, slide5, slide6,slide7, slide8, s
 const HomePage = () => {
   return (
     <div className="home-container">
-      <img src={logo} alt="Logo du glaive production" className="responsive-logo" />
-
-      <p className="home-description">
-        BIENVENUE DANS L'UNIVERS DE GERARD ROMERO<br />
-        OÙ VOUS POURREZ DÉCOUVRIR TOUT SON TRAVAIL<br />
-        ET COMMANDER SES DIFFÉRENTS ALBUMS BD ET AUTRES CRÉATIONS.
+     
+      <p className="home-description1">
+         GERARD ROMERO<br />
+        PORTFOLIO
       </p>
+      
+      <div class="flex-container">
 
-      <img src={ima} alt="Présentation de l'auteur" className="responsive-logo2" />
+        <img src="src/assets/bulbe.jpg" alt="logo" class="responsive-logo2" />
+
+       <div class="home-description">Bienvenue sur mon portfolio professionnel.<br></br><br></br>
+
+              Je suis développeur web full-stack, spécialisé dans la conception et le développement d’applications web modernes et performantes.<br></br>
+              Mon expertise repose sur des technologies telles que JavaScript, React, Node.js et MongoDB, avec une attention particulière portée à l’ergonomie et à la performance.<br></br>
+
+              Rigoureux, autonome et à l’écoute, je m’investis pleinement dans chaque projet pour proposer des solutions efficaces, évolutives et adaptées aux besoins des utilisateurs.
+              Je suis également en veille constante afin de rester à jour sur les dernières tendances du développement web et les bonnes pratiques du secteur.<br></br>
+
+              À travers ce portfolio, je vous invite à découvrir mes réalisations, mon parcours ainsi que les compétences que je mets à disposition pour vos projets numériques.<br></br>
+              N’hésitez pas à me contacter pour toute collaboration ou opportunité professionnelle.
+              </div>
+
+       
+
+      </div>
+
 
       <div className="carousel-frise">
         <div className="carousel-track-frise">

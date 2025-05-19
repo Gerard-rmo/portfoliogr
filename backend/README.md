@@ -104,7 +104,7 @@ npm install
 npm start
 ```
 
-Le serveur sera disponible sur `http://localhost:3007`.
+Le serveur sera disponible sur `http://localhost:3005`.
 
 ## API - Routes principales
 
