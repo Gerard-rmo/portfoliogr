@@ -22,6 +22,9 @@ const HomePage = () => {
      
       <p className="home-description1">
          GERARD ROMERO<br />
+      </p>
+      <p className="home-description2">
+        
         PORTFOLIO
       </p>
       
@@ -46,7 +49,7 @@ const HomePage = () => {
       </div>
 
 
-      <div className="carousel-frise">
+      {/* <div className="carousel-frise">
         <div className="carousel-track-frise">
           {[...slides, ...slides].map((img, index) => (
             <div className="carousel-item-frise" key={index}>
@@ -54,7 +57,7 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
