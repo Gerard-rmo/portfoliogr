@@ -28,13 +28,13 @@ const Navbar = () => {
             <Link to="/" className="btnLink" onClick={() => setMenuOpen(false)}>Accueil</Link>
           </li>
           <li className="navItem">
-            <Link to="/albums" className="navLink" onClick={() => setMenuOpen(false)}>Bédéthèque</Link>
+            <Link to="/albums" className="navLink" onClick={() => setMenuOpen(false)}>Projets</Link>
           </li>
           <li className="navItem">
-            <Link to="/skates" className="navLink" onClick={() => setMenuOpen(false)}>Planches de skate</Link>
+            <Link to="/skates" className="navLink" onClick={() => setMenuOpen(false)}>CV</Link>
           </li>
           <li className="navItem">
-            <Link to="/salons" className="navLink" onClick={() => setMenuOpen(false)}>Salons</Link>
+            <Link to="/salons" className="navLink" onClick={() => setMenuOpen(false)}>Compétences</Link>
           </li>
         </ul>
       </div>

@@ -22,8 +22,8 @@ const Bedetheque = () => {
 
   return (
     <div className="bedetheque-container">
-      <img src={logo} alt="Logo du glaive production" className="logo" />
-      <p className="bedetheque-title">MA BEDETHEQUE</p>
+      
+      <p className="bedetheque-title">MES PROJETS</p>
 
       <div className="gallery">
         {albums.map((album) => (

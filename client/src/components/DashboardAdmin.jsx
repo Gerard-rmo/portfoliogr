@@ -42,7 +42,7 @@ const DashboardAdmin = () => {
         <button onClick={() => setTab('albums')} className="tab-btn">Albums</button>
         <button onClick={() => setTab('dates')} className="tab-btn">Salons</button>
         <button onClick={() => setTab('photosSalons')} className="tab-btn">Photos Salons</button>
-        <button onClick={() => setTab('photosSkates')} className="tab-btn">Photos Skates</button>
+        <button onClick={() => setTab('photosSkates')} className="tab-btn">CV</button>
         <button onClick={() => setTab('photosPresse')} className="tab-btn">Photos Presse</button>
       </div>
 
